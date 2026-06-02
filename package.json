@@ -1,0 +1,10 @@
+{
+  "name": "atlas-mundi",
+  "version": "1.0.0",
+  "description": "The Explorer's World Encyclopaedia — AI-powered country profiles",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  }
+}
