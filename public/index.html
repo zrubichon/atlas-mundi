@@ -3,189 +3,260 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Atlas Mundi — The Explorer's World Encyclopaedia</title>
-<meta name="description" content="The most comprehensive interactive world atlas. Explore the history, culture, geopolitics, wars and crises of every nation and island on Earth.">
-<meta property="og:title" content="Atlas Mundi — World Encyclopaedia">
-<meta property="og:description" content="Explore every country and island — history, culture, geopolitics, wars, leaders, celebrities and more.">
-<meta property="og:type" content="website">
-<link rel="canonical" href="https://atlasmundi.com">
+<title>Atlas Mundi — World Encyclopaedia & Games</title>
+<meta name="description" content="Interactive world atlas with history, geopolitics, culture and educational games.">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 :root{--p:#f4e8c1;--pd:#e8d5a3;--pdd:#d4b896;--ink:#2c1810;--inkl:#4a3020;--inkf:#7a5c40;--red:#8b1a1a;--gold:#b8860b;--goldl:#d4a017;--br:#6b4423;--green:#4a6741;--blue:#4a7fa5;--sh:rgba(44,24,16,.3)}
 *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
 body{background:#1a0f05;font-family:'Libre Baskerville',Georgia,serif;color:var(--ink);overflow-x:hidden}
 
+/* NAV TABS TOP */
+.top-nav{background:#1a0f05;border-bottom:2px solid var(--gold);display:flex;align-items:center;justify-content:center;gap:0;position:sticky;top:0;z-index:500}
+.top-nav-btn{background:none;border:none;color:var(--pdd);font-family:'Cinzel',serif;font-size:.78rem;padding:.7rem 1.5rem;cursor:pointer;letter-spacing:.06em;transition:all .2s;border-bottom:3px solid transparent}
+.top-nav-btn:hover{color:var(--goldl);background:rgba(184,134,11,.1)}
+.top-nav-btn.act{color:var(--goldl);border-bottom-color:var(--gold);background:rgba(184,134,11,.08)}
+
 /* HEADER */
-.hdr{background:linear-gradient(180deg,#1a0f05,#2c1810,#3d2215);border-bottom:3px solid var(--gold);padding:1.4rem 2rem;text-align:center;position:relative}
-.hdr::before,.hdr::after{content:'⚜';position:absolute;top:50%;transform:translateY(-50%);color:var(--gold);font-size:1.8rem;opacity:.65}
-.hdr::before{left:1.5rem}.hdr::after{right:1.5rem}
-.htitle{font-family:'Cinzel Decorative',serif;font-size:clamp(1.6rem,4vw,3.2rem);color:var(--goldl);text-shadow:2px 2px 4px rgba(0,0,0,.8);letter-spacing:.05em}
-.hsub{font-family:'Cinzel',serif;font-size:clamp(.6rem,1.4vw,.85rem);color:var(--pdd);letter-spacing:.28em;text-transform:uppercase;margin-top:.35rem;opacity:.8}
-.horn{display:flex;align-items:center;gap:1rem;margin:.6rem auto 0;max-width:500px}
-.horn::before,.horn::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
-.horn span{color:var(--gold)}
+.hdr{background:linear-gradient(180deg,#1a0f05,#2c1810,#3d2215);border-bottom:3px solid var(--gold);padding:1.2rem 2rem;text-align:center;position:relative}
+.hdr::before,.hdr::after{content:'⚜';position:absolute;top:50%;transform:translateY(-50%);color:var(--gold);font-size:1.6rem;opacity:.65}
+.hdr::before{left:1.2rem}.hdr::after{right:1.2rem}
+.htitle{font-family:'Cinzel Decorative',serif;font-size:clamp(1.5rem,3.5vw,2.8rem);color:var(--goldl);text-shadow:2px 2px 4px rgba(0,0,0,.8)}
+.hsub{font-family:'Cinzel',serif;font-size:clamp(.58rem,1.3vw,.8rem);color:var(--pdd);letter-spacing:.25em;text-transform:uppercase;margin-top:.3rem;opacity:.8}
 
-/* SUPPORT BAR */
-.support-bar{background:#2c1810;border-bottom:1px solid var(--br);padding:.5rem 2rem;display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap}
-.support-bar span{font-family:'IM Fell English',serif;font-style:italic;font-size:.82rem;color:var(--pdd);opacity:.85}
-.kofi-btn{background:linear-gradient(135deg,#ff5e5b,#ff8c42);color:#fff;border:none;border-radius:20px;padding:.3rem 1rem;font-family:'Cinzel',serif;font-size:.7rem;cursor:pointer;letter-spacing:.04em;text-decoration:none;display:inline-flex;align-items:center;gap:.4rem;transition:opacity .2s}
-.kofi-btn:hover{opacity:.85}
-.amazon-note{font-family:'Cinzel',serif;font-size:.65rem;color:var(--gold);opacity:.7;letter-spacing:.05em}
+/* PAGES */
+.page{display:none}.page.act{display:block}
 
-/* TICKER */
-.tick{background:#2c1810;color:var(--goldl);padding:.38rem 1rem;font-family:'IM Fell English',serif;font-style:italic;font-size:.82rem;overflow:hidden;white-space:nowrap;border-bottom:1px solid var(--br)}
-.tick-in{display:inline-block;animation:tk 100s linear infinite}
-@keyframes tk{0%{transform:translateX(100vw)}100%{transform:translateX(-100%)}}
-
-/* INTRO */
-.intro{background:var(--p);border-bottom:2px solid var(--br);padding:.8rem 2rem;text-align:center;font-family:'IM Fell English',serif;font-style:italic;font-size:.92rem;color:var(--inkf)}
+/* ═══════════════ MAP PAGE ═══════════════ */
+.intro{background:var(--p);border-bottom:2px solid var(--br);padding:.7rem 2rem;text-align:center;font-family:'IM Fell English',serif;font-style:italic;font-size:.9rem;color:var(--inkf)}
 .intro strong{color:var(--red);font-style:normal}
-
-/* SEARCH */
-.sbar{background:var(--pd);border-bottom:1px solid var(--br);padding:.75rem 1.5rem;display:flex;align-items:center;justify-content:center;gap:.75rem;flex-wrap:wrap}
-.sbar input{background:var(--p);border:1.5px solid var(--br);border-radius:4px;padding:.48rem .9rem;font-family:'Libre Baskerville',serif;font-size:.88rem;color:var(--ink);width:290px;outline:none;transition:border-color .2s,box-shadow .2s}
-.sbar input:focus{border-color:var(--gold);box-shadow:0 0 8px rgba(184,134,11,.25)}
-.btn{background:var(--br);color:var(--p);border:none;border-radius:4px;padding:.48rem 1.1rem;font-family:'Cinzel',serif;font-size:.76rem;cursor:pointer;letter-spacing:.05em;transition:background .2s}
+.sbar{background:var(--pd);border-bottom:1px solid var(--br);padding:.65rem 1.2rem;display:flex;align-items:center;justify-content:center;gap:.65rem;flex-wrap:wrap}
+.sbar input{background:var(--p);border:1.5px solid var(--br);border-radius:4px;padding:.42rem .8rem;font-family:'Libre Baskerville',serif;font-size:.85rem;color:var(--ink);width:260px;outline:none}
+.sbar input:focus{border-color:var(--gold)}
+.btn{background:var(--br);color:var(--p);border:none;border-radius:4px;padding:.42rem 1rem;font-family:'Cinzel',serif;font-size:.74rem;cursor:pointer;letter-spacing:.04em;transition:background .2s}
 .btn:hover{background:var(--ink)}
-.filters{display:flex;gap:.38rem;flex-wrap:wrap;justify-content:center;margin-top:.45rem}
-.rb{background:transparent;border:1px solid var(--br);border-radius:20px;padding:.2rem .7rem;font-family:'Cinzel',serif;font-size:.68rem;color:var(--inkf);cursor:pointer;transition:all .2s;letter-spacing:.04em}
+.filters{display:flex;gap:.35rem;flex-wrap:wrap;justify-content:center;margin-top:.4rem}
+.rb{background:transparent;border:1px solid var(--br);border-radius:20px;padding:.18rem .65rem;font-family:'Cinzel',serif;font-size:.66rem;color:var(--inkf);cursor:pointer;transition:all .2s}
 .rb:hover,.rb.act{background:var(--br);color:var(--p)}
 
 /* MAP */
-.mapsec{background:var(--p);position:relative;overflow:hidden}
-.mapwrap{position:relative;width:100%;padding:.75rem}
-.maptitle{position:absolute;top:10px;left:50%;transform:translateX(-50%);font-family:'Cinzel Decorative',serif;font-size:clamp(.65rem,1.6vw,1.1rem);color:var(--ink);letter-spacing:.14em;z-index:10;opacity:.55;white-space:nowrap;pointer-events:none}
-#svgwrap{width:100%;position:relative;background:linear-gradient(180deg,#a8c8d8,#b8d8e8);border:3px solid var(--br);border-radius:4px;overflow:hidden}
-#wmap{width:100%;height:auto;cursor:crosshair;display:block}
-.mapldr{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(244,232,193,.9);z-index:5;font-family:'Cinzel',serif;color:var(--inkf);font-size:.95rem}
+.mapsec{background:var(--p);position:relative}
+.mapwrap{position:relative;width:100%;padding:.6rem}
+.maptitle{position:absolute;top:9px;left:50%;transform:translateX(-50%);font-family:'Cinzel Decorative',serif;font-size:clamp(.6rem,1.5vw,1rem);color:var(--ink);letter-spacing:.12em;z-index:10;opacity:.5;white-space:nowrap;pointer-events:none}
+#svgwrap{width:100%;position:relative;background:linear-gradient(180deg,#a8c8d8,#b8d8e8);border:3px solid var(--br);border-radius:4px;overflow:hidden;cursor:grab}
+#svgwrap:active{cursor:grabbing}
+#wmap{width:100%;height:auto;display:block;transform-origin:0 0;transition:transform .1s}
+.mapldr{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(244,232,193,.9);z-index:5;font-family:'Cinzel',serif;color:var(--inkf)}
+
+/* MAP CONTROLS */
+.map-controls{position:absolute;top:12px;right:14px;z-index:20;display:flex;flex-direction:column;gap:.3rem}
+.map-ctrl-btn{background:rgba(244,232,193,.92);border:1px solid var(--br);border-radius:4px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.9rem;font-family:'Cinzel',serif;color:var(--ink);transition:all .2s}
+.map-ctrl-btn:hover{background:var(--br);color:var(--p)}
+
 .cp{stroke:#6b4423;stroke-width:.4;cursor:pointer;transition:fill .15s}
 .cp:hover{fill:var(--gold)!important;stroke-width:.8}
 .cp.act{fill:var(--red)!important;stroke:#2c1810!important;stroke-width:1}
 .grat{fill:none;stroke:rgba(74,127,165,.1);stroke-width:.3}
 .r-europe{fill:#7a9e6b}.r-asia{fill:#c8965a}.r-africa{fill:#c8a45a}
 .r-americas{fill:#7a8ea5}.r-oceania{fill:#9abba5}.r-mena{fill:#d4a86a}
-.compass{position:absolute;bottom:16px;left:18px;width:66px;height:66px;z-index:10;opacity:.72}
-.mapleg{position:absolute;bottom:14px;right:14px;background:rgba(244,232,193,.92);border:1px solid var(--br);border-radius:4px;padding:.55rem .72rem;font-family:'Cinzel',serif;font-size:.6rem;color:var(--inkf);z-index:10;line-height:1.9}
-.li{display:flex;align-items:center;gap:.32rem}
-.ls{width:10px;height:10px;border-radius:2px;display:inline-block;flex-shrink:0}
+.compass{position:absolute;bottom:14px;left:14px;width:58px;height:58px;z-index:10;opacity:.7;pointer-events:none}
+.mapleg{position:absolute;bottom:12px;right:12px;background:rgba(244,232,193,.92);border:1px solid var(--br);border-radius:4px;padding:.5rem .65rem;font-family:'Cinzel',serif;font-size:.58rem;color:var(--inkf);z-index:10;line-height:1.85}
+.li{display:flex;align-items:center;gap:.3rem}
+.ls{width:9px;height:9px;border-radius:2px;display:inline-block;flex-shrink:0}
+
+/* BATTLE MARKERS */
+.battle-marker{cursor:pointer;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:.8}50%{opacity:1}}
+.battle-marker circle{transition:r .15s}
+.battle-marker:hover circle{r:7}
+.city-label{font-family:'Cinzel',serif;font-size:5px;fill:var(--ink);pointer-events:none;opacity:.7}
+.capital-dot{fill:#8b1a1a;stroke:#f4e8c1;stroke-width:.8}
 
 /* TOOLTIP */
-#tt{position:fixed;background:var(--p);border:1px solid var(--br);border-radius:4px;padding:.32rem .7rem;font-family:'Cinzel',serif;font-size:.78rem;color:var(--ink);pointer-events:none;z-index:9000;box-shadow:2px 2px 6px var(--sh);display:none}
+#tt{position:fixed;background:var(--p);border:1px solid var(--br);border-radius:4px;padding:.3rem .65rem;font-family:'Cinzel',serif;font-size:.76rem;color:var(--ink);pointer-events:none;z-index:9000;box-shadow:2px 2px 6px var(--sh);display:none;max-width:200px}
+
+/* BATTLE POPUP */
+#battle-popup{position:fixed;z-index:8000;background:var(--p);border:2px solid var(--br);border-radius:8px;padding:1.2rem;max-width:380px;width:90%;box-shadow:0 8px 30px rgba(0,0,0,.5);display:none;max-height:70vh;overflow-y:auto}
+.bp-close{position:absolute;top:.5rem;right:.5rem;background:var(--red);color:var(--p);border:none;border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center}
+.bp-title{font-family:'Cinzel',serif;font-size:1rem;color:var(--red);margin-bottom:.3rem}
+.bp-date{font-family:'Cinzel',serif;font-size:.7rem;color:var(--gold);margin-bottom:.6rem}
+.bp-body{font-size:.82rem;color:var(--inkl);line-height:1.75}
+.bp-loading{font-family:'IM Fell English',serif;font-style:italic;color:var(--inkf);font-size:.88rem}
 
 /* PANEL */
 #panel{display:none;background:var(--p);border-top:3px double var(--br)}
 #panel.vis{display:block}
-.ph{background:linear-gradient(135deg,#3d2215,#2c1810);color:var(--p);padding:1.3rem 2rem;display:flex;align-items:center;gap:1.4rem;position:relative;flex-wrap:wrap}
-.pflag{font-size:3.2rem;line-height:1;text-shadow:2px 2px 4px rgba(0,0,0,.5)}
-.pmeta h2{font-family:'Cinzel Decorative',serif;font-size:clamp(1.2rem,3vw,2.1rem);color:var(--goldl);text-shadow:1px 1px 3px rgba(0,0,0,.8)}
-.pmeta .ptag{font-family:'IM Fell English',serif;font-style:italic;color:var(--pdd);font-size:.9rem;margin-top:.2rem}
-.cls{position:absolute;top:.9rem;right:.9rem;background:var(--red);color:var(--p);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.ph{background:linear-gradient(135deg,#3d2215,#2c1810);color:var(--p);padding:1.1rem 1.8rem;display:flex;align-items:center;gap:1.2rem;position:relative;flex-wrap:wrap}
+.pflag{font-size:3rem;line-height:1}
+.pmeta h2{font-family:'Cinzel Decorative',serif;font-size:clamp(1.1rem,2.5vw,2rem);color:var(--goldl)}
+.ptag{font-family:'IM Fell English',serif;font-style:italic;color:var(--pdd);font-size:.88rem;margin-top:.18rem}
+.cls{position:absolute;top:.8rem;right:.8rem;background:var(--red);color:var(--p);border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:.95rem;display:flex;align-items:center;justify-content:center}
 .cls:hover{background:#6b1414}
-
-/* TABS */
 .tabs{display:flex;border-bottom:2px solid var(--br);background:var(--pd);overflow-x:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
-.tab{background:none;border:none;border-bottom:3px solid transparent;padding:.65rem 1rem;font-family:'Cinzel',serif;font-size:.7rem;color:var(--inkf);cursor:pointer;letter-spacing:.04em;white-space:nowrap;transition:all .2s}
+.tab{background:none;border:none;border-bottom:3px solid transparent;padding:.6rem .9rem;font-family:'Cinzel',serif;font-size:.68rem;color:var(--inkf);cursor:pointer;white-space:nowrap;transition:all .2s}
 .tab:hover{color:var(--ink);background:rgba(107,68,35,.1)}
 .tab.act{color:var(--red);border-bottom-color:var(--red);background:var(--p)}
-.tc{display:none;padding:1.8rem;max-width:1280px;margin:0 auto}
+.tc{display:none;padding:1.6rem;max-width:1280px;margin:0 auto}
 .tc.act{display:block}
-
-/* LOADING */
-.ldr{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem 2rem;gap:1rem}
-.quill{font-size:2.6rem;animation:wr 1.5s ease-in-out infinite alternate;display:inline-block}
+.ldr{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.5rem;gap:.9rem}
+.quill{font-size:2.4rem;animation:wr 1.5s ease-in-out infinite alternate;display:inline-block}
 @keyframes wr{0%{transform:rotate(-20deg) translateY(0)}100%{transform:rotate(-10deg) translateY(-10px)}}
-.ltxt{font-family:'IM Fell English',serif;font-style:italic;color:var(--inkf);font-size:.95rem}
+.ltxt{font-family:'IM Fell English',serif;font-style:italic;color:var(--inkf);font-size:.92rem}
 .ldots::after{content:'';animation:dt 1.5s steps(4,end) infinite}
 @keyframes dt{0%,20%{content:''}40%{content:'.'}60%{content:'..'}80%,100%{content:'...'}}
 
-/* ERROR */
-.err-box{background:rgba(139,26,26,.06);border:1px solid var(--red);border-left:4px solid var(--red);border-radius:4px;padding:1rem 1.2rem;margin:1rem 0}
-.err-lbl{font-family:'Cinzel',serif;font-size:.7rem;color:var(--red);letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:.35rem;font-weight:700}
-
-/* CONTENT STYLES (injected HTML uses these) */
-.sh{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--red);border-bottom:1px solid var(--pdd);padding-bottom:.45rem;margin:1.8rem 0 1rem;letter-spacing:.04em}
+/* CONTENT */
+.sh{font-family:'Cinzel',serif;font-size:1.15rem;color:var(--red);border-bottom:1px solid var(--pdd);padding-bottom:.4rem;margin:1.7rem 0 .95rem;letter-spacing:.04em}
 .sh:first-child{margin-top:0}
-.sh2{font-family:'Cinzel',serif;font-size:.95rem;color:var(--br);margin:1.2rem 0 .65rem}
-.ct{font-family:'Libre Baskerville',serif;font-size:.9rem;line-height:1.95;color:var(--inkl);margin-bottom:.85rem}
+.sh2{font-family:'Cinzel',serif;font-size:.92rem;color:var(--br);margin:1.1rem 0 .6rem}
+.ct{font-family:'Libre Baskerville',serif;font-size:.88rem;line-height:1.95;color:var(--inkl);margin-bottom:.8rem}
 .em{color:var(--red);font-weight:700}
-.div{border:none;border-top:1px solid var(--pdd);margin:1.4rem 0}
-.qb{border-left:3px solid var(--gold);padding:.65rem .95rem;margin:.9rem 0;font-family:'IM Fell English',serif;font-style:italic;font-size:.97rem;color:var(--inkf);line-height:1.8}
-.qb cite{display:block;font-style:normal;font-family:'Cinzel',serif;font-size:.68rem;color:var(--gold);margin-top:.35rem;letter-spacing:.07em}
-.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:.85rem;margin-bottom:1.3rem}
-.sc{background:var(--pd);border:1px solid var(--br);border-radius:6px;padding:.8rem;text-align:center}
-.sl{font-family:'Cinzel',serif;font-size:.6rem;color:var(--inkf);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.22rem}
-.sv{font-family:'Cinzel',serif;font-size:.95rem;color:var(--red);font-weight:700}
-.tl-wrap{position:relative;padding-left:2.3rem;margin:1.3rem 0}
-.tl-wrap::before{content:'';position:absolute;left:.4rem;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--gold),var(--br),var(--red))}
-.te{position:relative;margin-bottom:1.3rem;background:rgba(244,232,193,.5);border:1px solid var(--pdd);border-radius:4px;padding:.7rem .9rem}
-.te::before{content:'';position:absolute;left:-1.95rem;top:.75rem;width:10px;height:10px;border-radius:50%;background:var(--gold);border:2px solid var(--br)}
-.te.maj::before{background:var(--red);width:13px;height:13px;left:-2rem}
+.div{border:none;border-top:1px solid var(--pdd);margin:1.3rem 0}
+.qb{border-left:3px solid var(--gold);padding:.6rem .9rem;margin:.85rem 0;font-family:'IM Fell English',serif;font-style:italic;font-size:.94rem;color:var(--inkf);line-height:1.8}
+.qb cite{display:block;font-style:normal;font-family:'Cinzel',serif;font-size:.66rem;color:var(--gold);margin-top:.3rem}
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:.8rem;margin-bottom:1.2rem}
+.sc{background:var(--pd);border:1px solid var(--br);border-radius:6px;padding:.75rem;text-align:center}
+.sl{font-family:'Cinzel',serif;font-size:.58rem;color:var(--inkf);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem}
+.sv{font-family:'Cinzel',serif;font-size:.92rem;color:var(--red);font-weight:700}
+.tl-wrap{position:relative;padding-left:2.2rem;margin:1.2rem 0}
+.tl-wrap::before{content:'';position:absolute;left:.38rem;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--gold),var(--br),var(--red))}
+.te{position:relative;margin-bottom:1.2rem;background:rgba(244,232,193,.5);border:1px solid var(--pdd);border-radius:4px;padding:.65rem .85rem}
+.te::before{content:'';position:absolute;left:-1.88rem;top:.7rem;width:10px;height:10px;border-radius:50%;background:var(--gold);border:2px solid var(--br)}
+.te.maj::before{background:var(--red);width:12px;height:12px;left:-1.92rem}
 .te.maj{border-left:3px solid var(--red)}
 .te.dark{background:rgba(139,26,26,.06);border-color:rgba(139,26,26,.3)}
-.td{font-family:'Cinzel',serif;font-size:.73rem;color:var(--red);font-weight:700;letter-spacing:.04em}
-.tt2{font-family:'Cinzel',serif;font-size:.85rem;color:var(--ink);margin:.12rem 0}
-.tdesc{font-size:.81rem;color:var(--inkf);line-height:1.75;margin-top:.22rem}
-.ano{background:linear-gradient(135deg,rgba(184,134,11,.07),rgba(107,68,35,.07));border:1px solid var(--gold);border-left:4px solid var(--gold);border-radius:4px;padding:.9rem 1rem;margin:1rem 0;font-family:'IM Fell English',serif;font-style:italic;font-size:.91rem;color:var(--inkl);line-height:1.85}
-.ano-lbl{font-family:'Cinzel',serif;font-style:normal;font-size:.65rem;color:var(--gold);letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:.32rem}
-.crisis{background:rgba(139,26,26,.06);border:1px solid var(--red);border-left:4px solid var(--red);border-radius:4px;padding:.9rem 1rem;margin:1rem 0}
-.crisis-lbl{font-family:'Cinzel',serif;font-size:.65rem;color:var(--red);letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:.32rem;font-weight:700}
-.lg{display:grid;grid-template-columns:repeat(auto-fill,minmax(225px,1fr));gap:.95rem}
-.lc{background:var(--pd);border:1px solid var(--br);border-radius:6px;padding:.9rem;display:flex;gap:.75rem}
-.pp{width:55px;height:65px;background:var(--pdd);border:1px solid var(--br);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:var(--inkf);flex-shrink:0}
-.ln{font-family:'Cinzel',serif;font-size:.88rem;color:var(--ink);margin-bottom:.12rem}
-.lp{font-family:'Cinzel',serif;font-size:.65rem;color:var(--gold);margin-bottom:.28rem}
-.ld{font-size:.78rem;color:var(--inkf);line-height:1.65}
-.cel-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:.9rem}
-.cel-c{background:var(--pd);border:1px solid var(--br);border-radius:6px;padding:.82rem;text-align:center}
-.cel-ico{font-size:1.9rem;margin-bottom:.35rem}
-.cel-n{font-family:'Cinzel',serif;font-size:.85rem;color:var(--ink);margin-bottom:.12rem}
-.cel-role{font-family:'Cinzel',serif;font-size:.62rem;color:var(--gold);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.28rem}
-.cel-d{font-size:.78rem;color:var(--inkf);line-height:1.6}
-.gg{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.95rem;margin:1rem 0}
-.gc{background:var(--pd);border:1px solid var(--br);border-radius:6px;padding:.9rem}
-.gc-t{font-family:'Cinzel',serif;font-size:.75rem;color:var(--red);letter-spacing:.04em;text-transform:uppercase;margin-bottom:.45rem;display:flex;align-items:center;gap:.32rem}
-.ab{display:inline-block;background:var(--green);color:var(--p);font-family:'Cinzel',serif;font-size:.6rem;padding:.11rem .42rem;border-radius:10px;margin:.16rem}
-.cb{display:inline-block;background:var(--red);color:var(--p);font-family:'Cinzel',serif;font-size:.6rem;padding:.11rem .42rem;border-radius:10px;margin:.16rem}
-.nb{display:inline-block;background:var(--blue);color:var(--p);font-family:'Cinzel',serif;font-size:.6rem;padding:.11rem .42rem;border-radius:10px;margin:.16rem}
-.bld-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:.9rem}
-.bld-c{background:var(--pd);border:1px solid var(--br);border-radius:6px;padding:.85rem}
-.bld-ico{font-size:2rem;margin-bottom:.35rem}
-.bld-n{font-family:'Cinzel',serif;font-size:.85rem;color:var(--ink);margin-bottom:.18rem}
-.bld-d{font-size:.78rem;color:var(--inkf);line-height:1.6}
-.war-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:.95rem}
-.war-c{background:rgba(139,26,26,.05);border:1px solid rgba(139,26,26,.33);border-radius:6px;padding:.95rem}
-.war-n{font-family:'Cinzel',serif;font-size:.88rem;color:var(--red);margin-bottom:.28rem}
-.war-d{font-size:.81rem;color:var(--inkf);line-height:1.7}
-.war-stat{font-family:'Cinzel',serif;font-size:.67rem;color:var(--br);margin-top:.38rem}
-.books{background:linear-gradient(135deg,#2c1810,#3d2215);color:var(--p);border-radius:8px;padding:1.3rem;margin-top:1.4rem}
-.books-t{font-family:'Cinzel Decorative',serif;font-size:.95rem;color:var(--goldl);margin-bottom:.9rem;display:flex;align-items:center;gap:.45rem}
-.bk{border-bottom:1px solid rgba(244,232,193,.14);padding:.6rem 0;display:flex;gap:.7rem}
+.td{font-family:'Cinzel',serif;font-size:.7rem;color:var(--red);font-weight:700}
+.tt2{font-family:'Cinzel',serif;font-size:.82rem;color:var(--ink);margin:.1rem 0}
+.tdesc{font-size:.79rem;color:var(--inkf);line-height:1.72;margin-top:.2rem}
+.ano{background:linear-gradient(135deg,rgba(184,134,11,.07),rgba(107,68,35,.07));border:1px solid var(--gold);border-left:4px solid var(--gold);border-radius:4px;padding:.85rem .95rem;margin:.95rem 0;font-family:'IM Fell English',serif;font-style:italic;font-size:.89rem;color:var(--inkl);line-height:1.85}
+.ano-lbl{font-family:'Cinzel',serif;font-style:normal;font-size:.62rem;color:var(--gold);letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:.3rem}
+.crisis{background:rgba(139,26,26,.06);border:1px solid var(--red);border-left:4px solid var(--red);border-radius:4px;padding:.85rem .95rem;margin:.95rem 0}
+.crisis-lbl{font-family:'Cinzel',serif;font-size:.62rem;color:var(--red);letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:.3rem;font-weight:700}
+.lg{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:.9rem}
+.lc{background:var(--pd);border:1px solid var(--br);border-radius:6px;padding:.85rem;display:flex;gap:.7rem}
+.pp{width:52px;height:62px;background:var(--pdd);border:1px solid var(--br);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--inkf);flex-shrink:0}
+.ln{font-family:'Cinzel',serif;font-size:.85rem;color:var(--ink);margin-bottom:.1rem}
+.lp{font-family:'Cinzel',serif;font-size:.62rem;color:var(--gold);margin-bottom:.25rem}
+.ld{font-size:.76rem;color:var(--inkf);line-height:1.6}
+.cel-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:.85rem}
+.cel-c{background:var(--pd);border:1px solid var(--br);border-radius:6px;padding:.78rem;text-align:center}
+.cel-ico{font-size:1.8rem;margin-bottom:.3rem}
+.cel-n{font-family:'Cinzel',serif;font-size:.82rem;color:var(--ink);margin-bottom:.1rem}
+.cel-role{font-family:'Cinzel',serif;font-size:.6rem;color:var(--gold);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.25rem}
+.cel-d{font-size:.75rem;color:var(--inkf);line-height:1.58}
+.gg{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.9rem;margin:.9rem 0}
+.gc{background:var(--pd);border:1px solid var(--br);border-radius:6px;padding:.85rem}
+.gc-t{font-family:'Cinzel',serif;font-size:.72rem;color:var(--red);letter-spacing:.04em;text-transform:uppercase;margin-bottom:.42rem}
+.ab{display:inline-block;background:var(--green);color:var(--p);font-family:'Cinzel',serif;font-size:.58rem;padding:.1rem .4rem;border-radius:10px;margin:.14rem}
+.cb{display:inline-block;background:var(--red);color:var(--p);font-family:'Cinzel',serif;font-size:.58rem;padding:.1rem .4rem;border-radius:10px;margin:.14rem}
+.nb{display:inline-block;background:var(--blue);color:var(--p);font-family:'Cinzel',serif;font-size:.58rem;padding:.1rem .4rem;border-radius:10px;margin:.14rem}
+.bld-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.85rem}
+.bld-c{background:var(--pd);border:1px solid var(--br);border-radius:6px;padding:.82rem}
+.bld-ico{font-size:1.9rem;margin-bottom:.3rem}
+.bld-n{font-family:'Cinzel',serif;font-size:.82rem;color:var(--ink);margin-bottom:.16rem}
+.bld-d{font-size:.75rem;color:var(--inkf);line-height:1.58}
+.war-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.9rem}
+.war-c{background:rgba(139,26,26,.05);border:1px solid rgba(139,26,26,.3);border-radius:6px;padding:.9rem}
+.war-n{font-family:'Cinzel',serif;font-size:.85rem;color:var(--red);margin-bottom:.25rem}
+.war-d{font-size:.78rem;color:var(--inkf);line-height:1.68}
+.war-stat{font-family:'Cinzel',serif;font-size:.64rem;color:var(--br);margin-top:.35rem}
+.books{background:linear-gradient(135deg,#2c1810,#3d2215);color:var(--p);border-radius:8px;padding:1.2rem;margin-top:1.3rem}
+.books-t{font-family:'Cinzel Decorative',serif;font-size:.9rem;color:var(--goldl);margin-bottom:.85rem}
+.bk{border-bottom:1px solid rgba(244,232,193,.13);padding:.55rem 0;display:flex;gap:.65rem}
 .bk:last-child{border-bottom:none}
-.bk-ico{color:var(--gold);font-size:1rem;flex-shrink:0;margin-top:.08rem}
-.bk-t{font-family:'Cinzel',serif;font-size:.8rem;color:var(--p)}
-.bk-a{font-family:'IM Fell English',serif;font-style:italic;font-size:.75rem;color:var(--pdd);margin-top:.08rem}
-.bk-d{font-size:.72rem;color:rgba(244,232,193,.6);margin-top:.12rem;line-height:1.5}
-.links{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.9rem}
-.lnk{display:inline-flex;align-items:center;gap:.28rem;background:var(--pd);border:1px solid var(--br);border-radius:4px;padding:.25rem .6rem;font-family:'Cinzel',serif;font-size:.65rem;color:var(--blue);text-decoration:none;transition:all .2s}
+.bk-ico{color:var(--gold);font-size:.95rem;flex-shrink:0;margin-top:.06rem}
+.bk-t{font-family:'Cinzel',serif;font-size:.78rem;color:var(--p)}
+.bk-a{font-family:'IM Fell English',serif;font-style:italic;font-size:.72rem;color:var(--pdd);margin-top:.07rem}
+.bk-d{font-size:.7rem;color:rgba(244,232,193,.6);margin-top:.1rem;line-height:1.5}
+.links{display:flex;flex-wrap:wrap;gap:.42rem;margin-top:.85rem}
+.lnk{display:inline-flex;align-items:center;gap:.26rem;background:var(--pd);border:1px solid var(--br);border-radius:4px;padding:.22rem .55rem;font-family:'Cinzel',serif;font-size:.63rem;color:var(--blue);text-decoration:none;transition:all .2s}
 .lnk:hover{background:var(--br);color:var(--p)}
-.danger-bar{display:flex;align-items:center;gap:.55rem;margin:.45rem 0}
-.db-label{font-family:'Cinzel',serif;font-size:.67rem;color:var(--inkf);width:105px;flex-shrink:0}
-.db-track{flex:1;height:7px;background:var(--pdd);border-radius:4px;overflow:hidden}
+.danger-bar{display:flex;align-items:center;gap:.5rem;margin:.42rem 0}
+.db-label{font-family:'Cinzel',serif;font-size:.64rem;color:var(--inkf);width:100px;flex-shrink:0}
+.db-track{flex:1;height:6px;background:var(--pdd);border-radius:4px;overflow:hidden}
 .db-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--green),var(--red))}
-.island-note{background:rgba(74,127,165,.1);border:1px solid var(--blue);border-radius:4px;padding:.65rem .95rem;margin:.75rem 0;font-family:'Cinzel',serif;font-size:.73rem;color:var(--blue);letter-spacing:.03em}
+.island-note{background:rgba(74,127,165,.1);border:1px solid var(--blue);border-radius:4px;padding:.6rem .9rem;margin:.7rem 0;font-family:'Cinzel',serif;font-size:.7rem;color:var(--blue)}
+.err-box{background:rgba(139,26,26,.06);border:1px solid var(--red);border-left:4px solid var(--red);border-radius:4px;padding:.9rem 1rem;margin:.9rem 0}
+.err-lbl{font-family:'Cinzel',serif;font-size:.65rem;color:var(--red);letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:.3rem;font-weight:700}
+
+/* MINI BATTLE MAP inside wars tab */
+.battle-map-container{background:linear-gradient(135deg,#1a2a1a,#2a1a0a);border:2px solid var(--br);border-radius:8px;margin:1.2rem 0;overflow:hidden}
+.battle-map-header{background:rgba(184,134,11,.15);border-bottom:1px solid var(--br);padding:.7rem 1rem;font-family:'Cinzel',serif;font-size:.78rem;color:var(--goldl);display:flex;align-items:center;gap:.5rem}
+.battle-map-svg{width:100%;height:300px;cursor:pointer}
+.battle-map-note{padding:.5rem 1rem;font-family:'IM Fell English',serif;font-style:italic;font-size:.75rem;color:var(--pdd);opacity:.7}
+
+/* ═══════════════ GAMES PAGE ═══════════════ */
+.games-page{background:var(--p);min-height:100vh}
+.games-header{background:linear-gradient(135deg,#2c1810,#3d2215);padding:2rem;text-align:center;border-bottom:2px solid var(--gold)}
+.games-title{font-family:'Cinzel Decorative',serif;font-size:clamp(1.4rem,3vw,2.5rem);color:var(--goldl);margin-bottom:.4rem}
+.games-sub{font-family:'IM Fell English',serif;font-style:italic;color:var(--pdd);font-size:.95rem}
+.games-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;padding:2rem;max-width:1200px;margin:0 auto}
+.game-card{background:var(--pd);border:2px solid var(--br);border-radius:12px;padding:1.5rem;cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.game-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(184,134,11,.05),rgba(107,68,35,.05));opacity:0;transition:opacity .25s}
+.game-card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.game-card:hover::before{opacity:1}
+.game-ico{font-size:2.8rem;margin-bottom:.8rem;display:block}
+.game-name{font-family:'Cinzel',serif;font-size:1.05rem;color:var(--ink);margin-bottom:.4rem}
+.game-desc{font-size:.82rem;color:var(--inkf);line-height:1.65;margin-bottom:.8rem}
+.game-badge{display:inline-block;background:var(--br);color:var(--p);font-family:'Cinzel',serif;font-size:.62rem;padding:.2rem .6rem;border-radius:10px;letter-spacing:.04em}
+.game-badge.multi{background:var(--green)}
+.game-badge.hard{background:var(--red)}
+
+/* GAME ARENA */
+#game-arena{display:none;background:var(--p);min-height:100vh}
+.arena-header{background:linear-gradient(135deg,#2c1810,#3d2215);padding:1rem 1.5rem;display:flex;align-items:center;gap:1rem;border-bottom:2px solid var(--gold)}
+.arena-back{background:none;border:1px solid var(--gold);color:var(--goldl);font-family:'Cinzel',serif;font-size:.75rem;padding:.35rem .8rem;border-radius:4px;cursor:pointer;transition:all .2s}
+.arena-back:hover{background:var(--gold);color:var(--ink)}
+.arena-title{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--goldl)}
+.arena-score{margin-left:auto;font-family:'Cinzel',serif;font-size:.85rem;color:var(--goldl)}
+.arena-body{padding:2rem;max-width:800px;margin:0 auto}
+.q-card{background:var(--pd);border:2px solid var(--br);border-radius:10px;padding:1.5rem;margin-bottom:1.2rem}
+.q-text{font-family:'Cinzel',serif;font-size:1rem;color:var(--ink);margin-bottom:1.2rem;line-height:1.5}
+.q-img{width:100%;max-height:220px;object-fit:contain;border-radius:6px;margin-bottom:1rem;background:var(--pdd)}
+.q-flag{font-size:5rem;display:block;text-align:center;margin-bottom:1rem}
+.q-shape{width:100%;height:160px;display:flex;align-items:center;justify-content:center;font-size:6rem;margin-bottom:1rem}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.opt{background:var(--p);border:1.5px solid var(--br);border-radius:6px;padding:.7rem 1rem;font-family:'Cinzel',serif;font-size:.82rem;color:var(--ink);cursor:pointer;transition:all .2s;text-align:left}
+.opt:hover:not(:disabled){background:var(--br);color:var(--p);border-color:var(--br)}
+.opt.correct{background:#2d5a2d!important;border-color:#2d5a2d!important;color:#fff!important}
+.opt.wrong{background:#5a2d2d!important;border-color:#5a2d2d!important;color:#fff!important}
+.opt:disabled{cursor:default}
+.q-result{margin-top:1rem;padding:.7rem;border-radius:6px;font-family:'Cinzel',serif;font-size:.82rem;display:none}
+.q-result.show{display:block}
+.q-result.ok{background:rgba(45,90,45,.15);border:1px solid #2d5a2d;color:#1a3a1a}
+.q-result.fail{background:rgba(90,45,45,.15);border:1px solid #5a2d2d;color:#3a1a1a}
+.next-btn{background:var(--br);color:var(--p);border:none;border-radius:6px;padding:.6rem 1.4rem;font-family:'Cinzel',serif;font-size:.8rem;cursor:pointer;margin-top:.8rem;transition:background .2s;display:none}
+.next-btn.show{display:inline-block}
+.next-btn:hover{background:var(--ink)}
+.score-panel{text-align:center;padding:2rem}
+.score-big{font-family:'Cinzel Decorative',serif;font-size:3rem;color:var(--red);margin:.5rem 0}
+.score-msg{font-family:'IM Fell English',serif;font-style:italic;color:var(--inkf);font-size:1.1rem;margin-bottom:1.5rem}
+.progress-bar{height:6px;background:var(--pdd);border-radius:3px;margin-bottom:1.2rem;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--red));border-radius:3px;transition:width .4s}
+
+/* PLACE THE COUNTRY GAME */
+#place-game-map{width:100%;height:400px;background:linear-gradient(180deg,#a8c8d8,#b8d8e8);border:2px solid var(--br);border-radius:8px;position:relative;overflow:hidden;cursor:crosshair}
+.place-target{position:absolute;background:rgba(139,26,26,.15);border:2px dashed var(--red);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:.7rem;color:var(--red);pointer-events:none}
+.place-pin{position:absolute;width:20px;height:20px;background:var(--gold);border:2px solid var(--br);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;transition:all .3s}
+.place-pin.correct{background:#2d5a2d}
+.place-pin.wrong{background:#5a2d2d}
 
 /* SCROLL TOP */
-#stop{position:fixed;bottom:1.8rem;right:1.8rem;background:var(--br);color:var(--p);border:none;border-radius:50%;width:40px;height:40px;cursor:pointer;font-size:1rem;z-index:100;transition:all .2s;box-shadow:2px 2px 8px var(--sh);display:none;align-items:center;justify-content:center}
-#stop:hover{background:var(--ink)}
+#stop{position:fixed;bottom:1.6rem;right:1.6rem;background:var(--br);color:var(--p);border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:.95rem;z-index:100;box-shadow:2px 2px 8px var(--sh);display:none;align-items:center;justify-content:center}
 #stop.vis{display:flex}
 
 /* FOOTER */
-footer{background:linear-gradient(180deg,#2c1810,#1a0f05);color:var(--pdd);text-align:center;padding:2rem;border-top:2px solid var(--gold);font-family:'IM Fell English',serif;font-style:italic;font-size:.8rem}
-.ft{font-family:'Cinzel Decorative',serif;color:var(--goldl);font-size:.95rem;margin-bottom:.5rem}
-.fdisclaimer{font-size:.68rem;opacity:.55;margin-top:.4rem}
+footer{background:linear-gradient(180deg,#2c1810,#1a0f05);color:var(--pdd);text-align:center;padding:1.5rem;border-top:2px solid var(--gold);font-family:'IM Fell English',serif;font-style:italic;font-size:.78rem}
 
-@media(max-width:768px){.tab{padding:.55rem .75rem;font-size:.65rem}.sg{grid-template-columns:repeat(2,1fr)}.gg,.war-g,.bld-g{grid-template-columns:1fr}.tc{padding:1.1rem}.ph{gap:1rem}}
+@media(max-width:768px){
+  .options{grid-template-columns:1fr}
+  .games-grid{grid-template-columns:1fr;padding:1rem}
+  .tab{padding:.5rem .7rem;font-size:.63rem}
+  .sg{grid-template-columns:repeat(2,1fr)}
+  .gg,.war-g,.bld-g,.lg{grid-template-columns:1fr}
+  .tc{padding:1rem}
+}
 </style>
 </head>
 <body>
@@ -193,526 +264,1074 @@ footer{background:linear-gradient(180deg,#2c1810,#1a0f05);color:var(--pdd);text-
 <div id="tt"></div>
 <button id="stop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
+<!-- BATTLE POPUP -->
+<div id="battle-popup">
+  <button class="bp-close" onclick="closeBattlePopup()">✕</button>
+  <div class="bp-title" id="bp-title"></div>
+  <div class="bp-date" id="bp-date"></div>
+  <div class="bp-body" id="bp-body"><span class="bp-loading">Loading the chronicles<span class="ldots"></span></span></div>
+</div>
+
 <!-- HEADER -->
 <header class="hdr">
   <div class="htitle">Atlas Mundi</div>
-  <div class="hsub">The Explorer's Encyclopaedia of Nations, Islands &amp; Civilisations</div>
-  <div class="horn"><span>✦</span></div>
+  <div class="hsub">World Encyclopaedia · History · Geopolitics · Games</div>
 </header>
 
-<!-- SUPPORT BAR -->
-<div class="support-bar">
-  <span>✦ Free to explore · No account needed · Powered by AI</span>
-  <a href="https://ko-fi.com/atlasmundi" target="_blank" class="kofi-btn">☕ Support the Atlas</a>
-  <span class="amazon-note">📚 Book links support us via Amazon affiliate</span>
-</div>
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <button class="top-nav-btn act" onclick="showPage('map-page',this)">🗺 World Map</button>
+  <button class="top-nav-btn" onclick="showPage('games-page',this)">🎮 Games</button>
+</nav>
 
-<!-- TICKER -->
-<div class="tick"><span class="tick-in">
-  ✦ The world has 195 sovereign nations &amp; over 900 inhabited islands ✦ Rome governed 25% of humanity at its peak ✦ The Byzantine Empire lasted 1,058 years ✦ Cleopatra lived closer to us than to the pyramids ✦ Hawaii was an independent kingdom until 1893 ✦ The Mongol Empire spanned 24 million km² ✦ The Philippines has 7,641 islands ✦ Iceland's Althing (930 AD) is the world's oldest parliament ✦ The Black Death killed 50% of medieval Europe ✦ The Ottoman Empire ruled 3 continents for 600 years ✦ The Amazon produces 20% of Earth's oxygen ✦ More languages are spoken in Papua New Guinea than any other country ✦
-</span></div>
-
-<!-- INTRO -->
-<div class="intro">
-  <strong>Click any country or island on the map</strong> — or search below — for its complete history, geopolitics, culture, wars, celebrities &amp; more.
-  <em>12 sections · No censorship · AI-generated in real time.</em>
-</div>
-
-<!-- SEARCH -->
-<div class="sbar">
-  <input type="text" id="si" placeholder="Search: France, Hawaii, Byzantine Empire, Philippines..." onkeydown="if(event.key==='Enter')doSearch()">
-  <button class="btn" onclick="doSearch()">Explore ⚔</button>
-  <div class="filters">
-    <button class="rb act" onclick="filt('all',this)">All</button>
-    <button class="rb" onclick="filt('r-europe',this)">Europe</button>
-    <button class="rb" onclick="filt('r-asia',this)">Asia</button>
-    <button class="rb" onclick="filt('r-africa',this)">Africa</button>
-    <button class="rb" onclick="filt('r-americas',this)">Americas</button>
-    <button class="rb" onclick="filt('r-mena',this)">Middle East</button>
-    <button class="rb" onclick="filt('r-oceania',this)">Oceania &amp; Islands</button>
+<!-- ═══ MAP PAGE ═══ -->
+<div id="map-page" class="page act">
+  <div class="intro">
+    <strong>Click any country or island</strong> — zoom with scroll or buttons — battle markers ⚔ appear when you explore a country's wars.
   </div>
-</div>
+  <div class="sbar">
+    <input type="text" id="si" placeholder="Search: France, Hawaii, Byzantine Empire..." onkeydown="if(event.key==='Enter')doSearch()">
+    <button class="btn" onclick="doSearch()">Explore ⚔</button>
+    <div class="filters">
+      <button class="rb act" onclick="filt('all',this)">All</button>
+      <button class="rb" onclick="filt('r-europe',this)">Europe</button>
+      <button class="rb" onclick="filt('r-asia',this)">Asia</button>
+      <button class="rb" onclick="filt('r-africa',this)">Africa</button>
+      <button class="rb" onclick="filt('r-americas',this)">Americas</button>
+      <button class="rb" onclick="filt('r-mena',this)">Middle East</button>
+      <button class="rb" onclick="filt('r-oceania',this)">Oceania & Islands</button>
+    </div>
+  </div>
 
-<!-- MAP -->
-<div class="mapsec">
-  <div class="mapwrap">
-    <div class="maptitle">ORBIS TERRARUM — WORLD MAP</div>
-    <div id="svgwrap">
-      <div class="mapldr" id="mload">⚓ Loading the World Map…</div>
-      <svg id="wmap" viewBox="0 0 960 500" xmlns="http://www.w3.org/2000/svg">
-        <rect width="960" height="500" fill="#a8c8d8"/>
-        <g class="grat">
-          <line x1="0" y1="83" x2="960" y2="83"/><line x1="0" y1="167" x2="960" y2="167"/>
-          <line x1="0" y1="250" x2="960" y2="250"/><line x1="0" y1="333" x2="960" y2="333"/>
-          <line x1="0" y1="417" x2="960" y2="417"/>
-          <line x1="192" y1="0" x2="192" y2="500"/><line x1="384" y1="0" x2="384" y2="500"/>
-          <line x1="576" y1="0" x2="576" y2="500"/><line x1="768" y1="0" x2="768" y2="500"/>
-        </g>
-        <g id="clayer"></g>
-      </svg>
-      <svg class="compass" viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r="48" fill="rgba(244,232,193,.85)" stroke="#6b4423" stroke-width="2"/>
-        <polygon points="50,6 55,45 50,50 45,45" fill="#8b1a1a"/>
-        <polygon points="50,94 55,55 50,50 45,55" fill="#6b4423"/>
-        <polygon points="6,50 45,45 50,50 45,55" fill="#6b4423"/>
-        <polygon points="94,50 55,45 50,50 55,55" fill="#6b4423"/>
-        <text x="50" y="19" text-anchor="middle" font-family="Cinzel,serif" font-size="11" fill="#8b1a1a" font-weight="700">N</text>
-        <text x="50" y="89" text-anchor="middle" font-family="Cinzel,serif" font-size="9" fill="#6b4423">S</text>
-        <text x="86" y="54" text-anchor="middle" font-family="Cinzel,serif" font-size="9" fill="#6b4423">E</text>
-        <text x="14" y="54" text-anchor="middle" font-family="Cinzel,serif" font-size="9" fill="#6b4423">W</text>
-        <circle cx="50" cy="50" r="4" fill="#b8860b"/>
-      </svg>
-      <div class="mapleg">
-        <div style="font-weight:700;margin-bottom:.35rem;font-family:'Cinzel',serif;font-size:.65rem;color:var(--ink)">REGIONS</div>
-        <div class="li"><span class="ls" style="background:#7a9e6b"></span>Europe</div>
-        <div class="li"><span class="ls" style="background:#c8965a"></span>Asia</div>
-        <div class="li"><span class="ls" style="background:#c8a45a"></span>Africa</div>
-        <div class="li"><span class="ls" style="background:#7a8ea5"></span>Americas</div>
-        <div class="li"><span class="ls" style="background:#d4a86a"></span>Middle East</div>
-        <div class="li"><span class="ls" style="background:#9abba5"></span>Oceania/Islands</div>
+  <div class="mapsec">
+    <div class="mapwrap">
+      <div class="maptitle">ORBIS TERRARUM</div>
+      <div id="svgwrap">
+        <div class="mapldr" id="mload">⚓ Loading the World Map…</div>
+        <svg id="wmap" viewBox="0 0 960 500" xmlns="http://www.w3.org/2000/svg">
+          <rect width="960" height="500" fill="#a8c8d8"/>
+          <g class="grat">
+            <line x1="0" y1="83" x2="960" y2="83"/><line x1="0" y1="167" x2="960" y2="167"/>
+            <line x1="0" y1="250" x2="960" y2="250"/><line x1="0" y1="333" x2="960" y2="333"/>
+            <line x1="0" y1="417" x2="960" y2="417"/>
+            <line x1="192" y1="0" x2="192" y2="500"/><line x1="384" y1="0" x2="384" y2="500"/>
+            <line x1="576" y1="0" x2="576" y2="500"/><line x1="768" y1="0" x2="768" y2="500"/>
+          </g>
+          <g id="clayer"></g>
+          <g id="city-layer"></g>
+          <g id="battle-layer"></g>
+        </svg>
+
+        <!-- MAP CONTROLS -->
+        <div class="map-controls">
+          <div class="map-ctrl-btn" onclick="zoomMap(1.3)" title="Zoom in">+</div>
+          <div class="map-ctrl-btn" onclick="zoomMap(0.77)" title="Zoom out">−</div>
+          <div class="map-ctrl-btn" onclick="resetZoom()" title="Reset">⌂</div>
+        </div>
+
+        <svg class="compass" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="48" fill="rgba(244,232,193,.85)" stroke="#6b4423" stroke-width="2"/>
+          <polygon points="50,6 55,45 50,50 45,45" fill="#8b1a1a"/>
+          <polygon points="50,94 55,55 50,50 45,55" fill="#6b4423"/>
+          <polygon points="6,50 45,45 50,50 45,55" fill="#6b4423"/>
+          <polygon points="94,50 55,45 50,50 55,55" fill="#6b4423"/>
+          <text x="50" y="19" text-anchor="middle" font-family="Cinzel,serif" font-size="11" fill="#8b1a1a" font-weight="700">N</text>
+          <text x="50" y="89" text-anchor="middle" font-family="Cinzel,serif" font-size="9" fill="#6b4423">S</text>
+          <text x="86" y="54" text-anchor="middle" font-family="Cinzel,serif" font-size="9" fill="#6b4423">E</text>
+          <text x="14" y="54" text-anchor="middle" font-family="Cinzel,serif" font-size="9" fill="#6b4423">W</text>
+          <circle cx="50" cy="50" r="4" fill="#b8860b"/>
+        </svg>
+        <div class="mapleg">
+          <div style="font-weight:700;margin-bottom:.3rem;font-size:.63rem;color:var(--ink)">REGIONS</div>
+          <div class="li"><span class="ls" style="background:#7a9e6b"></span>Europe</div>
+          <div class="li"><span class="ls" style="background:#c8965a"></span>Asia</div>
+          <div class="li"><span class="ls" style="background:#c8a45a"></span>Africa</div>
+          <div class="li"><span class="ls" style="background:#7a8ea5"></span>Americas</div>
+          <div class="li"><span class="ls" style="background:#d4a86a"></span>Middle East</div>
+          <div class="li"><span class="ls" style="background:#9abba5"></span>Oceania</div>
+          <div class="li"><span class="ls" style="background:#8b1a1a"></span>Capital ●</div>
+          <div class="li"><span style="color:#8b1a1a;font-size:.75rem">⚔</span>Battle</div>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- COUNTRY PANEL -->
+  <div id="panel">
+    <div class="ph">
+      <div class="pflag" id="pflag">🌍</div>
+      <div class="pmeta">
+        <h2 id="pname">Select a Country</h2>
+        <div class="ptag" id="ptag"></div>
+      </div>
+      <button class="cls" onclick="closeP()">✕</button>
+    </div>
+    <div class="tabs" id="tabs">
+      <button class="tab act" data-tab="overview"    onclick="sw('overview',this)">📜 Overview</button>
+      <button class="tab"     data-tab="antiquity"   onclick="sw('antiquity',this)">🏛 Antiquity</button>
+      <button class="tab"     data-tab="history"     onclick="sw('history',this)">📖 History</button>
+      <button class="tab"     data-tab="politics"    onclick="sw('politics',this)">⚖ Politics</button>
+      <button class="tab"     data-tab="leaders"     onclick="sw('leaders',this)">👑 Leaders</button>
+      <button class="tab"     data-tab="culture"     onclick="sw('culture',this)">🎭 Culture</button>
+      <button class="tab"     data-tab="religion"    onclick="sw('religion',this)">✝ Religion</button>
+      <button class="tab"     data-tab="celebrities" onclick="sw('celebrities',this)">⭐ Celebrities</button>
+      <button class="tab"     data-tab="geopolitics" onclick="sw('geopolitics',this)">🌐 Geopolitics</button>
+      <button class="tab"     data-tab="wars"        onclick="sw('wars',this)">⚔ Wars & Battles</button>
+      <button class="tab"     data-tab="crises"      onclick="sw('crises',this)">🔥 Crises</button>
+      <button class="tab"     data-tab="resources"   onclick="sw('resources',this)">📚 Resources</button>
+    </div>
+    <div id="tc-overview"    class="tc act"><div class="ldr" id="l-overview"><span class="quill">✒</span><span class="ltxt">The scribes are writing<span class="ldots"></span></span></div><div id="cv-overview"></div></div>
+    <div id="tc-antiquity"   class="tc"><div class="ldr" id="l-antiquity"   style="display:none"><span class="quill">✒</span><span class="ltxt">Consulting the ancients<span class="ldots"></span></span></div><div id="cv-antiquity"></div></div>
+    <div id="tc-history"     class="tc"><div class="ldr" id="l-history"     style="display:none"><span class="quill">✒</span><span class="ltxt">Unrolling the chronicles<span class="ldots"></span></span></div><div id="cv-history"></div></div>
+    <div id="tc-politics"    class="tc"><div class="ldr" id="l-politics"    style="display:none"><span class="quill">✒</span><span class="ltxt">Mapping the power<span class="ldots"></span></span></div><div id="cv-politics"></div></div>
+    <div id="tc-leaders"     class="tc"><div class="ldr" id="l-leaders"     style="display:none"><span class="quill">✒</span><span class="ltxt">Summoning the rulers<span class="ldots"></span></span></div><div id="cv-leaders"></div></div>
+    <div id="tc-culture"     class="tc"><div class="ldr" id="l-culture"     style="display:none"><span class="quill">✒</span><span class="ltxt">Exploring the arts<span class="ldots"></span></span></div><div id="cv-culture"></div></div>
+    <div id="tc-religion"    class="tc"><div class="ldr" id="l-religion"    style="display:none"><span class="quill">✒</span><span class="ltxt">Entering the sacred<span class="ldots"></span></span></div><div id="cv-religion"></div></div>
+    <div id="tc-celebrities" class="tc"><div class="ldr" id="l-celebrities" style="display:none"><span class="quill">✒</span><span class="ltxt">Gathering the greats<span class="ldots"></span></span></div><div id="cv-celebrities"></div></div>
+    <div id="tc-geopolitics" class="tc"><div class="ldr" id="l-geopolitics" style="display:none"><span class="quill">✒</span><span class="ltxt">Charting the alliances<span class="ldots"></span></span></div><div id="cv-geopolitics"></div></div>
+    <div id="tc-wars"        class="tc"><div class="ldr" id="l-wars"        style="display:none"><span class="quill">✒</span><span class="ltxt">Recording the battles<span class="ldots"></span></span></div><div id="cv-wars"></div></div>
+    <div id="tc-crises"      class="tc"><div class="ldr" id="l-crises"      style="display:none"><span class="quill">✒</span><span class="ltxt">Documenting the crises<span class="ldots"></span></span></div><div id="cv-crises"></div></div>
+    <div id="tc-resources"   class="tc"><div class="ldr" id="l-resources"   style="display:none"><span class="quill">✒</span><span class="ltxt">Gathering the library<span class="ldots"></span></span></div><div id="cv-resources"></div></div>
+  </div>
 </div>
 
-<!-- COUNTRY PANEL -->
-<div id="panel">
-  <div class="ph">
-    <div class="pflag" id="pflag">🌍</div>
-    <div class="pmeta">
-      <h2 id="pname">Select a Country</h2>
-      <div class="ptag" id="ptag"></div>
+<!-- ═══ GAMES PAGE ═══ -->
+<div id="games-page" class="page">
+  <div id="games-menu" class="games-page">
+    <div class="games-header">
+      <div class="games-title">🎮 Atlas Mundi — Games</div>
+      <div class="games-sub">Test your knowledge of the world — solo or with friends</div>
     </div>
-    <button class="cls" onclick="closeP()">✕</button>
+    <div class="games-grid">
+      <div class="game-card" onclick="startGame('flags')">
+        <span class="game-ico">🏳</span>
+        <div class="game-name">Flag Master</div>
+        <div class="game-desc">A flag appears — name the country. 195 countries, increasing difficulty. Can you get them all?</div>
+        <span class="game-badge">Solo</span>
+      </div>
+      <div class="game-card" onclick="startGame('capitals')">
+        <span class="game-ico">🏛</span>
+        <div class="game-name">Capital Cities</div>
+        <div class="game-desc">What's the capital of Burkina Faso? Of Bhutan? Test your capitals knowledge across all continents.</div>
+        <span class="game-badge">Solo</span>
+      </div>
+      <div class="game-card" onclick="startGame('shapes')">
+        <span class="game-ico">🗺</span>
+        <div class="game-name">Country Shapes</div>
+        <div class="game-desc">The silhouette of a country appears — identify it from its shape alone. Tricky!</div>
+        <span class="game-badge hard">Hard</span>
+      </div>
+      <div class="game-card" onclick="startGame('celebrities')">
+        <span class="game-ico">⭐</span>
+        <div class="game-name">Famous Faces & Places</div>
+        <div class="game-desc">Which country is this celebrity from? Which nation produced this invention? History meets pop culture.</div>
+        <span class="game-badge">Solo</span>
+      </div>
+      <div class="game-card" onclick="startGame('history')">
+        <span class="game-ico">⚔</span>
+        <div class="game-name">History Trivia</div>
+        <div class="game-desc">Wars, revolutions, empires, leaders — how well do you know world history? 3 difficulty levels.</div>
+        <span class="game-badge">Solo</span>
+      </div>
+      <div class="game-card" onclick="startGame('population')">
+        <span class="game-ico">👥</span>
+        <div class="game-name">Bigger or Smaller?</div>
+        <div class="game-desc">Which country has a bigger population? Which has a larger area? Fast-paced comparison game.</div>
+        <span class="game-badge">Solo</span>
+      </div>
+      <div class="game-card" onclick="startGame('place')">
+        <span class="game-ico">📍</span>
+        <div class="game-name">Place It!</div>
+        <div class="game-desc">Click where you think a country is on the blank map. Score based on how close you are. Geography challenge!</div>
+        <span class="game-badge hard">Hard</span>
+      </div>
+      <div class="game-card" onclick="startGame('timeline')">
+        <span class="game-ico">📅</span>
+        <div class="game-name">History Timeline</div>
+        <div class="game-desc">Put historical events in the right chronological order. From ancient empires to modern revolutions.</div>
+        <span class="game-badge">Solo</span>
+      </div>
+    </div>
   </div>
 
-  <div class="tabs" id="tabs">
-    <button class="tab act" data-tab="overview"     onclick="sw('overview',this)">📜 Overview</button>
-    <button class="tab"     data-tab="antiquity"    onclick="sw('antiquity',this)">🏛 Antiquity</button>
-    <button class="tab"     data-tab="history"      onclick="sw('history',this)">📖 History</button>
-    <button class="tab"     data-tab="politics"     onclick="sw('politics',this)">⚖ Politics</button>
-    <button class="tab"     data-tab="leaders"      onclick="sw('leaders',this)">👑 Leaders</button>
-    <button class="tab"     data-tab="culture"      onclick="sw('culture',this)">🎭 Culture</button>
-    <button class="tab"     data-tab="religion"     onclick="sw('religion',this)">✝ Religion</button>
-    <button class="tab"     data-tab="celebrities"  onclick="sw('celebrities',this)">⭐ Celebrities</button>
-    <button class="tab"     data-tab="geopolitics"  onclick="sw('geopolitics',this)">🌐 Geopolitics</button>
-    <button class="tab"     data-tab="wars"         onclick="sw('wars',this)">⚔ Wars</button>
-    <button class="tab"     data-tab="crises"       onclick="sw('crises',this)">🔥 Crises</button>
-    <button class="tab"     data-tab="resources"    onclick="sw('resources',this)">📚 Resources</button>
+  <!-- GAME ARENA -->
+  <div id="game-arena">
+    <div class="arena-header">
+      <button class="arena-back" onclick="backToGames()">← Back to Games</button>
+      <span class="arena-title" id="arena-title">Game</span>
+      <span class="arena-score" id="arena-score">Score: 0</span>
+    </div>
+    <div class="arena-body" id="arena-body"></div>
   </div>
-
-  <div id="tc-overview"    class="tc act"><div class="ldr" id="l-overview"><span class="quill">✒</span><span class="ltxt">The scribes are writing<span class="ldots"></span></span></div><div id="cv-overview"></div></div>
-  <div id="tc-antiquity"   class="tc"><div class="ldr" id="l-antiquity"   style="display:none"><span class="quill">✒</span><span class="ltxt">Consulting the ancients<span class="ldots"></span></span></div><div id="cv-antiquity"></div></div>
-  <div id="tc-history"     class="tc"><div class="ldr" id="l-history"     style="display:none"><span class="quill">✒</span><span class="ltxt">Unrolling the chronicles<span class="ldots"></span></span></div><div id="cv-history"></div></div>
-  <div id="tc-politics"    class="tc"><div class="ldr" id="l-politics"    style="display:none"><span class="quill">✒</span><span class="ltxt">Mapping the power<span class="ldots"></span></span></div><div id="cv-politics"></div></div>
-  <div id="tc-leaders"     class="tc"><div class="ldr" id="l-leaders"     style="display:none"><span class="quill">✒</span><span class="ltxt">Summoning the rulers<span class="ldots"></span></span></div><div id="cv-leaders"></div></div>
-  <div id="tc-culture"     class="tc"><div class="ldr" id="l-culture"     style="display:none"><span class="quill">✒</span><span class="ltxt">Exploring the arts<span class="ldots"></span></span></div><div id="cv-culture"></div></div>
-  <div id="tc-religion"    class="tc"><div class="ldr" id="l-religion"    style="display:none"><span class="quill">✒</span><span class="ltxt">Entering the sacred<span class="ldots"></span></span></div><div id="cv-religion"></div></div>
-  <div id="tc-celebrities" class="tc"><div class="ldr" id="l-celebrities" style="display:none"><span class="quill">✒</span><span class="ltxt">Gathering the greats<span class="ldots"></span></span></div><div id="cv-celebrities"></div></div>
-  <div id="tc-geopolitics" class="tc"><div class="ldr" id="l-geopolitics" style="display:none"><span class="quill">✒</span><span class="ltxt">Charting the alliances<span class="ldots"></span></span></div><div id="cv-geopolitics"></div></div>
-  <div id="tc-wars"        class="tc"><div class="ldr" id="l-wars"        style="display:none"><span class="quill">✒</span><span class="ltxt">Recording the battles<span class="ldots"></span></span></div><div id="cv-wars"></div></div>
-  <div id="tc-crises"      class="tc"><div class="ldr" id="l-crises"      style="display:none"><span class="quill">✒</span><span class="ltxt">Documenting the crises<span class="ldots"></span></span></div><div id="cv-crises"></div></div>
-  <div id="tc-resources"   class="tc"><div class="ldr" id="l-resources"   style="display:none"><span class="quill">✒</span><span class="ltxt">Gathering the library<span class="ldots"></span></span></div><div id="cv-resources"></div></div>
 </div>
 
 <footer>
-  <div class="ft">Atlas Mundi</div>
-  <p>All content generated in real time by AI · For educational purposes · No censorship policy</p>
-  <p>Book links are Amazon affiliate links — they support the project at no extra cost to you</p>
-  <p class="fdisclaimer">Hic svnt dracones — Here there be dragons</p>
+  <div style="font-family:'Cinzel Decorative',serif;color:var(--goldl);font-size:.9rem;margin-bottom:.4rem">Atlas Mundi</div>
+  <p>AI-generated encyclopaedic content · Educational purposes · Book links support us via Amazon affiliate</p>
+  <p style="font-size:.65rem;opacity:.5;margin-top:.3rem">Hic svnt dracones</p>
 </footer>
 
 <script>
-// ── CONFIG ─────────────────────────────────────────────────
-// In production this points to your Vercel backend
-// In local testing, set to '' and it will use relative path
-const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-  ? 'http://localhost:3000'
-  : ''; // empty = same domain on Vercel
+// ══════════════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════════════
+const API_BASE = window.location.hostname==='localhost'||window.location.hostname==='127.0.0.1'
+  ? 'http://localhost:3000' : '';
 
-// ── COUNTRY DATABASE ────────────────────────────────────────
-const DB = {
-  "France":           {flag:"🇫🇷",r:"r-europe",tag:"Liberté, Égalité, Fraternité — Empire of Enlightenment"},
-  "Germany":          {flag:"🇩🇪",r:"r-europe",tag:"From Holy Roman Empire to Federal Republic"},
-  "United Kingdom":   {flag:"🇬🇧",r:"r-europe",tag:"The Empire on Which the Sun Never Set"},
-  "Italy":            {flag:"🇮🇹",r:"r-europe",tag:"From Roman Empire to the Boot of Europe"},
-  "Spain":            {flag:"🇪🇸",r:"r-europe",tag:"Empire of the Sun, Conquistadors & Civil War"},
-  "Portugal":         {flag:"🇵🇹",r:"r-europe",tag:"The First Global Maritime Empire"},
-  "Russia":           {flag:"🇷🇺",r:"r-europe",tag:"From Tsardom to Soviet Union to Revanchism"},
-  "Ukraine":          {flag:"🇺🇦",r:"r-europe",tag:"Between Empires — The Battleground of Europe"},
-  "Poland":           {flag:"🇵🇱",r:"r-europe",tag:"The Country That Disappeared and Returned"},
-  "Greece":           {flag:"🇬🇷",r:"r-europe",tag:"Birthplace of Democracy, Philosophy & Western Civilisation"},
-  "Sweden":           {flag:"🇸🇪",r:"r-europe",tag:"From Viking Raiders to the Nordic Model"},
-  "Netherlands":      {flag:"🇳🇱",r:"r-europe",tag:"Masters of the Sea — The Dutch Golden Age"},
-  "Belgium":          {flag:"🇧🇪",r:"r-europe",tag:"Leopold's Congo Atrocity & the Heart of Europe"},
-  "Switzerland":      {flag:"🇨🇭",r:"r-europe",tag:"The Eternal Neutral & Banker of the World"},
-  "Austria":          {flag:"🇦🇹",r:"r-europe",tag:"Habsburg Splendour & the Birth of Modernity"},
-  "Hungary":          {flag:"🇭🇺",r:"r-europe",tag:"Magyars, Habsburgs & Orbán's Illiberalism"},
-  "Romania":          {flag:"🇷🇴",r:"r-europe",tag:"Land of Dacians, Vlad & Ceaușescu"},
-  "Serbia":           {flag:"🇷🇸",r:"r-europe",tag:"The Spark of World War I & the Balkans Wars"},
-  "Croatia":          {flag:"🇭🇷",r:"r-europe",tag:"Adriatic Pearl & the Yugoslav War"},
-  "Turkey":           {flag:"🇹🇷",r:"r-europe",tag:"Ottoman Heir — Between Europe and Asia"},
-  "Ireland":          {flag:"🇮🇪",r:"r-europe",tag:"Famine, the IRA & the Celtic Tiger"},
-  "Norway":           {flag:"🇳🇴",r:"r-europe",tag:"Vikings, Oil & the World's Happiest Nation"},
-  "Denmark":          {flag:"🇩🇰",r:"r-europe",tag:"Vikings, Welfare & Greenland's Future"},
-  "Finland":          {flag:"🇫🇮",r:"r-europe",tag:"The Winter War & Nordic Resilience"},
-  "Iceland":          {flag:"🇮🇸",r:"r-europe",tag:"Land of Fire & Ice — World's Oldest Parliament"},
-  "Czech Republic":   {flag:"🇨🇿",r:"r-europe",tag:"Bohemia, Velvet Revolution & Kafka"},
-  "Bulgaria":         {flag:"🇧🇬",r:"r-europe",tag:"First Bulgarian Empire to EU Membership"},
-  "Albania":          {flag:"🇦🇱",r:"r-europe",tag:"Land of Eagles — Hoxha's Iron Curtain"},
-  "Cyprus":           {flag:"🇨🇾",r:"r-europe",tag:"Divided Island — Turkish Occupation Since 1974"},
-  "Malta":            {flag:"🇲🇹",r:"r-europe",tag:"Island Fortress — Crusaders, Napoleon & WWII Blitz"},
-  "Egypt":            {flag:"🇪🇬",r:"r-mena",tag:"5,000 Years of Civilisation — Mother of the World"},
-  "Saudi Arabia":     {flag:"🇸🇦",r:"r-mena",tag:"Birthplace of Islam & the Oil Monarchy"},
-  "Iran":             {flag:"🇮🇷",r:"r-mena",tag:"Ancient Persia — Revolution & Isolation"},
-  "Iraq":             {flag:"🇮🇶",r:"r-mena",tag:"Mesopotamia — Cradle of Civilisation & Modern Ruin"},
-  "Syria":            {flag:"🇸🇾",r:"r-mena",tag:"Damascus, the Oldest City & a Nation Destroyed"},
-  "Israel":           {flag:"🇮🇱",r:"r-mena",tag:"The Promised Land & the Occupation"},
-  "Palestine":        {flag:"🇵🇸",r:"r-mena",tag:"A People's Struggle for Statehood"},
-  "Lebanon":          {flag:"🇱🇧",r:"r-mena",tag:"The Paris of the Middle East in Collapse"},
-  "Yemen":            {flag:"🇾🇪",r:"r-mena",tag:"The World's Worst Humanitarian Catastrophe"},
-  "Jordan":           {flag:"🇯🇴",r:"r-mena",tag:"Hashemite Kingdom & the Desert Rose"},
-  "Libya":            {flag:"🇱🇾",r:"r-mena",tag:"After Gaddafi — Chaos & Civil War"},
-  "Morocco":          {flag:"🇲🇦",r:"r-mena",tag:"Kingdom of the Sunset — Berbers & Sultans"},
-  "Tunisia":          {flag:"🇹🇳",r:"r-mena",tag:"Carthage, Hannibal & the Arab Spring's Origin"},
-  "Algeria":          {flag:"🇩🇿",r:"r-mena",tag:"War of Independence & Saharan Depths"},
-  "Sudan":            {flag:"🇸🇩",r:"r-mena",tag:"Darfur Genocide, Partition & Endless War"},
-  "UAE":              {flag:"🇦🇪",r:"r-mena",tag:"From Desert to Global Hub in 50 Years"},
-  "Afghanistan":      {flag:"🇦🇫",r:"r-mena",tag:"The Graveyard of Empires"},
-  "Qatar":            {flag:"🇶🇦",r:"r-mena",tag:"Gas, Football & Controversies"},
-  "China":            {flag:"🇨🇳",r:"r-asia",tag:"5,000 Years of Continuous Civilisation"},
-  "Japan":            {flag:"🇯🇵",r:"r-asia",tag:"Land of the Rising Sun — Samurai to Superpower"},
-  "India":            {flag:"🇮🇳",r:"r-asia",tag:"The Subcontinent — Indus Valley to Nuclear Power"},
-  "South Korea":      {flag:"🇰🇷",r:"r-asia",tag:"The Miracle on the Han River"},
-  "North Korea":      {flag:"🇰🇵",r:"r-asia",tag:"The Hermit Kingdom — Dynasty of Isolation"},
-  "Vietnam":          {flag:"🇻🇳",r:"r-asia",tag:"A Nation That Defeated Three Empires"},
-  "Indonesia":        {flag:"🇮🇩",r:"r-asia",tag:"17,000 Islands — The World's Largest Archipelago"},
-  "Philippines":      {flag:"🇵🇭",r:"r-asia",tag:"7,641 Islands — Pearl of the Orient Seas"},
-  "Pakistan":         {flag:"🇵🇰",r:"r-asia",tag:"Land of the Pure — Nuclear State in Crisis"},
-  "Bangladesh":       {flag:"🇧🇩",r:"r-asia",tag:"Born in Blood — 1971 Genocide & the Bengal Tiger"},
-  "Thailand":         {flag:"🇹🇭",r:"r-asia",tag:"Land of Smiles — Temples & Coups"},
-  "Myanmar":          {flag:"🇲🇲",r:"r-asia",tag:"The Golden Land — Genocide & Military Rule"},
-  "Cambodia":         {flag:"🇰🇭",r:"r-asia",tag:"Angkor Wat & the Killing Fields"},
-  "Mongolia":         {flag:"🇲🇳",r:"r-asia",tag:"Genghis Khan & the World's Greatest Land Empire"},
-  "Malaysia":         {flag:"🇲🇾",r:"r-asia",tag:"Rainforests, Sultans & the Tiger Economy"},
-  "Singapore":        {flag:"🇸🇬",r:"r-asia",tag:"From Fishing Village to Asia's Financial Capital"},
-  "Sri Lanka":        {flag:"🇱🇰",r:"r-asia",tag:"Pearl of the Indian Ocean — Civil War & Recovery"},
-  "Nepal":            {flag:"🇳🇵",r:"r-asia",tag:"Himalayan Kingdom — Everest & Revolution"},
-  "Taiwan":           {flag:"🇹🇼",r:"r-asia",tag:"The Other China — Democracy Under Threat"},
-  "Hong Kong":        {flag:"🇭🇰",r:"r-asia",tag:"From British Colony to Beijing's Grip"},
-  "Timor-Leste":      {flag:"🇹🇱",r:"r-asia",tag:"Indonesian Occupation & Hard-Won Independence"},
-  "Nigeria":          {flag:"🇳🇬",r:"r-africa",tag:"Giant of Africa — Oil, Boko Haram & 220 Million"},
-  "South Africa":     {flag:"🇿🇦",r:"r-africa",tag:"Apartheid, Mandela & the Rainbow Nation"},
-  "Ethiopia":         {flag:"🇪🇹",r:"r-africa",tag:"Cradle of Mankind — Never Colonised"},
-  "Kenya":            {flag:"🇰🇪",r:"r-africa",tag:"Safari, Mau Mau & the Great Rift Valley"},
-  "Tanzania":         {flag:"🇹🇿",r:"r-africa",tag:"Kilimanjaro, Zanzibar & Ujamaa Socialism"},
-  "Congo":            {flag:"🇨🇩",r:"r-africa",tag:"Leopold's Horror — The Heart of Darkness"},
-  "Ghana":            {flag:"🇬🇭",r:"r-africa",tag:"Gold Coast — First Sub-Saharan Independence"},
-  "Rwanda":           {flag:"🇷🇼",r:"r-africa",tag:"100 Days of Genocide — and Miraculous Recovery"},
-  "Somalia":          {flag:"🇸🇴",r:"r-africa",tag:"Failed State, Pirates & Al-Shabaab"},
-  "Zimbabwe":         {flag:"🇿🇼",r:"r-africa",tag:"Mugabe, Hyperinflation & the Breadbasket's Fall"},
-  "Mali":             {flag:"🇲🇱",r:"r-africa",tag:"Empire of Gold, Salt & Timbuktu's Libraries"},
-  "South Sudan":      {flag:"🇸🇸",r:"r-africa",tag:"World's Newest Nation — Born Into War"},
-  "Mozambique":       {flag:"🇲🇿",r:"r-africa",tag:"Civil War, Portuguese Legacy & Jihadist Insurgency"},
-  "Senegal":          {flag:"🇸🇳",r:"r-africa",tag:"West African Gateway — Gorée Island & Democracy"},
-  "Madagascar":       {flag:"🇲🇬",r:"r-oceania",tag:"The Red Island — Unique Ecosystem & Poverty"},
-  "United States":    {flag:"🇺🇸",r:"r-americas",tag:"From Colony to Global Hegemon — The American Century"},
-  "Mexico":           {flag:"🇲🇽",r:"r-americas",tag:"Aztecs, Cartels, NAFTA & the Shadow of the North"},
-  "Brazil":           {flag:"🇧🇷",r:"r-americas",tag:"Largest in Latin America — Dictatorship to Lula"},
-  "Argentina":        {flag:"🇦🇷",r:"r-americas",tag:"Peronism, the Dirty War & Milei"},
-  "Colombia":         {flag:"🇨🇴",r:"r-americas",tag:"FARC, Escobar & the Peace Process"},
-  "Venezuela":        {flag:"🇻🇪",r:"r-americas",tag:"Oil Riches Turned Humanitarian Disaster"},
-  "Cuba":             {flag:"🇨🇺",r:"r-americas",tag:"Revolution, Embargo & Che Guevara"},
-  "Haiti":            {flag:"🇭🇹",r:"r-americas",tag:"First Black Republic — Born in Slavery, Cursed by Debt"},
-  "Chile":            {flag:"🇨🇱",r:"r-americas",tag:"Pinochet, Allende & the Long Thin Country"},
-  "Peru":             {flag:"🇵🇪",r:"r-americas",tag:"Land of the Incas — Machu Picchu & Sendero Luminoso"},
-  "Bolivia":          {flag:"🇧🇴",r:"r-americas",tag:"Roof of the World — Lithium & Evo Morales"},
-  "Canada":           {flag:"🇨🇦",r:"r-americas",tag:"From Colonies to Multicultural Superstate"},
-  "Guatemala":        {flag:"🇬🇹",r:"r-americas",tag:"Maya, CIA Coup & Civil War Genocide"},
-  "El Salvador":      {flag:"🇸🇻",r:"r-americas",tag:"MS-13, Gang State & Bukele's Iron Fist"},
-  "Honduras":         {flag:"🇭🇳",r:"r-americas",tag:"Banana Republic & Migration Crisis"},
-  "Nicaragua":        {flag:"🇳🇮",r:"r-americas",tag:"Sandinistas, Contras & Ortega's Dictatorship"},
-  "Jamaica":          {flag:"🇯🇲",r:"r-americas",tag:"Reggae, Rastafari & Slavery's Deep Legacy"},
-  "Puerto Rico":      {flag:"🇵🇷",r:"r-americas",tag:"Island Colony — US Territory Fighting for Status"},
-  "Australia":        {flag:"🇦🇺",r:"r-oceania",tag:"From Aboriginal Dreamtime to the Lucky Country"},
-  "New Zealand":      {flag:"🇳🇿",r:"r-oceania",tag:"Māori, ANZAC & Progressive Democracy"},
-  "Papua New Guinea": {flag:"🇵🇬",r:"r-oceania",tag:"World's Most Diverse Island — 800+ Languages"},
-  "Fiji":             {flag:"🇫🇯",r:"r-oceania",tag:"Paradise of Coups — Island Nation at the Crossroads"},
-  "Hawaii":           {flag:"🌺",r:"r-oceania",tag:"The Stolen Kingdom — Paradise, Pineapples & US Annexation"},
-  "Tahiti":           {flag:"🏝",r:"r-oceania",tag:"French Polynesia — Gauguin, Nuclear Tests & Paradise"},
-  "New Caledonia":    {flag:"🏝",r:"r-oceania",tag:"Nickel, Kanaks & France's Pacific Outpost"},
-  "Guam":             {flag:"🇬🇺",r:"r-oceania",tag:"Chamorro People — America's Unsinkable Aircraft Carrier"},
-  "Easter Island":    {flag:"🏝",r:"r-oceania",tag:"Rapa Nui — Moai, Ecological Collapse & Chile's Outpost"},
-  "Vanuatu":          {flag:"🇻🇺",r:"r-oceania",tag:"Cargo Cults, Volcanoes & the New Hebrides"},
-  "Solomon Islands":  {flag:"🇸🇧",r:"r-oceania",tag:"WWII Battleground — Guadalcanal & Ethnic Tensions"},
-  "Samoa":            {flag:"🇼🇸",r:"r-oceania",tag:"Polynesian Heart — Between Tradition & Modernity"},
-  "Tonga":            {flag:"🇹🇴",r:"r-oceania",tag:"The Last Polynesian Kingdom"},
-  "Maldives":         {flag:"🇲🇻",r:"r-oceania",tag:"1,200 Islands Sinking Into the Sea"},
-  "Seychelles":       {flag:"🇸🇨",r:"r-oceania",tag:"Eden of the Indian Ocean — Piracy & Paradise"},
-  "Mauritius":        {flag:"🇲🇺",r:"r-oceania",tag:"Dodo's Island — From Slavery to African Success Story"},
-  "Zanzibar":         {flag:"🏝",r:"r-africa",tag:"The Spice Island — Slave Trade & Stone Town"},
-  "Comoros":          {flag:"🇰🇲",r:"r-africa",tag:"20 Coups in 40 Years — Most Unstable Island Nation"},
-  "Cape Verde":       {flag:"🇨🇻",r:"r-africa",tag:"Transatlantic Crossroads — Music, Diaspora & Wind"},
-  "Réunion":          {flag:"🏝",r:"r-africa",tag:"Indian Ocean Melting Pot — French Overseas Territory"},
-  "Greenland":        {flag:"🏔",r:"r-europe",tag:"World's Largest Island — Inuit, Vikings & Climate Change"},
-  "Corsica":          {flag:"🏝",r:"r-europe",tag:"Napoleon's Birthplace — Between France & Identity"},
-  "Sicily":           {flag:"🏝",r:"r-europe",tag:"Crossroads of Civilisations — Mafia & Ancient Glory"},
-  "Crete":            {flag:"🏝",r:"r-europe",tag:"Minoan Civilisation — Europe's Oldest Culture"},
-  "Okinawa":          {flag:"🏝",r:"r-asia",tag:"Ryukyu Kingdom — US Bases & the Battle of Okinawa"},
-  "Macau":            {flag:"🇲🇴",r:"r-asia",tag:"450 Years of Portuguese Rule — Now Asia's Las Vegas"},
-  "Martinique":       {flag:"🏝",r:"r-americas",tag:"French Caribbean — Josephine & Slavery's Wounds"},
-  "Byzantine Empire": {flag:"⚜",r:"r-europe",tag:"Eastern Rome — 1,058 Years of Continuity"},
-  "Roman Empire":     {flag:"🦅",r:"r-europe",tag:"SPQR — The Greatest Empire of the Ancient World"},
-  "Ottoman Empire":   {flag:"☪",r:"r-mena",tag:"600 Years — From Anatolia to Three Continents"},
-  "Mongol Empire":    {flag:"🐎",r:"r-asia",tag:"The Largest Contiguous Empire in Human History"},
-  "Aztec Empire":     {flag:"🌞",r:"r-americas",tag:"Tenochtitlán — Sacrifice, Gold & Cortés"},
-  "Inca Empire":      {flag:"🦙",r:"r-americas",tag:"Children of the Sun — Andes to Pacific"},
-  "Carthage":         {flag:"🐘",r:"r-mena",tag:"Hannibal's City — Rome's Greatest Rival"},
-  "Ancient Egypt":    {flag:"𓂀",r:"r-mena",tag:"3,000 Years of Pharaohs & Gods"},
-  "Persian Empire":   {flag:"🦁",r:"r-mena",tag:"Achaemenid & Sassanid — The Persian World Order"},
-};
-
-// ── STATE ──────────────────────────────────────────────────
-let cur = null, loaded = {};
-
-// ── MAP ────────────────────────────────────────────────────
-function loadSc(src, cb) {
-  const s = document.createElement('script');
-  s.src = src; s.onload = cb; document.head.appendChild(s);
+// ══════════════════════════════════════════════
+// PAGE NAVIGATION
+// ══════════════════════════════════════════════
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('act'));
+  document.querySelectorAll('.top-nav-btn').forEach(b => b.classList.remove('act'));
+  document.getElementById(id).classList.add('act');
+  if(btn) btn.classList.add('act');
+  // Show games menu, hide arena
+  if(id === 'games-page') {
+    document.getElementById('games-menu').style.display = 'block';
+    document.getElementById('game-arena').style.display = 'none';
+  }
 }
 
-function loadMap() {
-  loadSc('https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js', () => {
-    loadSc('https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js', () => {
+// ══════════════════════════════════════════════
+// COUNTRY DATABASE
+// ══════════════════════════════════════════════
+const DB = {
+  "France":          {flag:"🇫🇷",r:"r-europe",tag:"Liberté, Égalité, Fraternité",capital:"Paris",cx:455,cy:180},
+  "Germany":         {flag:"🇩🇪",r:"r-europe",tag:"From Holy Roman Empire to Federal Republic",capital:"Berlin",cx:473,cy:163},
+  "United Kingdom":  {flag:"🇬🇧",r:"r-europe",tag:"The Empire on Which the Sun Never Set",capital:"London",cx:435,cy:158},
+  "Italy":           {flag:"🇮🇹",r:"r-europe",tag:"From Roman Empire to la Dolce Vita",capital:"Rome",cx:474,cy:196},
+  "Spain":           {flag:"🇪🇸",r:"r-europe",tag:"Empire of the Sun, Conquistadors & Civil War",capital:"Madrid",cx:437,cy:193},
+  "Portugal":        {flag:"🇵🇹",r:"r-europe",tag:"The First Global Maritime Empire",capital:"Lisbon",cx:427,cy:196},
+  "Russia":          {flag:"🇷🇺",r:"r-europe",tag:"From Tsardom to Soviet Union to Revanchism",capital:"Moscow",cx:545,cy:143},
+  "Ukraine":         {flag:"🇺🇦",r:"r-europe",tag:"Between Empires — The Battleground of Europe",capital:"Kyiv",cx:517,cy:165},
+  "Poland":          {flag:"🇵🇱",r:"r-europe",tag:"The Country That Disappeared and Returned",capital:"Warsaw",cx:487,cy:158},
+  "Greece":          {flag:"🇬🇷",r:"r-europe",tag:"Birthplace of Democracy, Philosophy & Western Civilisation",capital:"Athens",cx:497,cy:210},
+  "Sweden":          {flag:"🇸🇪",r:"r-europe",tag:"From Viking Raiders to the Nordic Model",capital:"Stockholm",cx:481,cy:133},
+  "Netherlands":     {flag:"🇳🇱",r:"r-europe",tag:"Masters of the Sea — The Dutch Golden Age",capital:"Amsterdam",cx:456,cy:155},
+  "Belgium":         {flag:"🇧🇪",r:"r-europe",tag:"Leopold's Congo Atrocity & Heart of Europe",capital:"Brussels",cx:454,cy:160},
+  "Switzerland":     {flag:"🇨🇭",r:"r-europe",tag:"The Eternal Neutral & Banker of the World",capital:"Bern",cx:462,cy:177},
+  "Austria":         {flag:"🇦🇹",r:"r-europe",tag:"Habsburg Splendour & the Birth of Modernity",capital:"Vienna",cx:479,cy:172},
+  "Norway":          {flag:"🇳🇴",r:"r-europe",tag:"Vikings, Oil & the World's Happiest Nation",capital:"Oslo",cx:465,cy:128},
+  "Denmark":         {flag:"🇩🇰",r:"r-europe",tag:"Vikings, Welfare & Greenland's Future",capital:"Copenhagen",cx:471,cy:147},
+  "Finland":         {flag:"🇫🇮",r:"r-europe",tag:"The Winter War & Nordic Resilience",capital:"Helsinki",cx:500,cy:128},
+  "Iceland":         {flag:"🇮🇸",r:"r-europe",tag:"Land of Fire & Ice — World's Oldest Parliament",capital:"Reykjavik",cx:384,cy:103},
+  "Czech Republic":  {flag:"🇨🇿",r:"r-europe",tag:"Bohemia, Velvet Revolution & Kafka",capital:"Prague",cx:479,cy:163},
+  "Romania":         {flag:"🇷🇴",r:"r-europe",tag:"Land of Dacians, Vlad & Ceaușescu",capital:"Bucharest",cx:502,cy:178},
+  "Hungary":         {flag:"🇭🇺",r:"r-europe",tag:"Magyars, Habsburgs & Orbán's Illiberalism",capital:"Budapest",cx:487,cy:172},
+  "Serbia":          {flag:"🇷🇸",r:"r-europe",tag:"The Spark of World War I",capital:"Belgrade",cx:492,cy:181},
+  "Croatia":         {flag:"🇭🇷",r:"r-europe",tag:"Adriatic Pearl & the Yugoslav War",capital:"Zagreb",cx:480,cy:178},
+  "Turkey":          {flag:"🇹🇷",r:"r-europe",tag:"Ottoman Heir — Between Europe and Asia",capital:"Ankara",cx:522,cy:200},
+  "Ireland":         {flag:"🇮🇪",r:"r-europe",tag:"Famine, the IRA & the Celtic Tiger",capital:"Dublin",cx:423,cy:153},
+  "Cyprus":          {flag:"🇨🇾",r:"r-europe",tag:"Divided Island — Turkish Occupation Since 1974",capital:"Nicosia",cx:518,cy:207},
+  "Malta":           {flag:"🇲🇹",r:"r-europe",tag:"Island Fortress — Crusaders & WWII Blitz",capital:"Valletta",cx:474,cy:208},
+  "Bulgaria":        {flag:"🇧🇬",r:"r-europe",tag:"First Bulgarian Empire to EU Membership",capital:"Sofia",cx:500,cy:183},
+  "Albania":         {flag:"🇦🇱",r:"r-europe",tag:"Land of Eagles — Hoxha's Iron Curtain",capital:"Tirana",cx:489,cy:188},
+  "Egypt":           {flag:"🇪🇬",r:"r-mena",tag:"5,000 Years — Mother of the World",capital:"Cairo",cx:519,cy:232},
+  "Saudi Arabia":    {flag:"🇸🇦",r:"r-mena",tag:"Birthplace of Islam & the Oil Monarchy",capital:"Riyadh",cx:548,cy:248},
+  "Iran":            {flag:"🇮🇷",r:"r-mena",tag:"Ancient Persia — Revolution & Isolation",capital:"Tehran",cx:570,cy:220},
+  "Iraq":            {flag:"🇮🇶",r:"r-mena",tag:"Mesopotamia — Cradle of Civilisation",capital:"Baghdad",cx:549,cy:223},
+  "Syria":           {flag:"🇸🇾",r:"r-mena",tag:"Damascus — Ancient City, Modern Ruin",capital:"Damascus",cx:528,cy:212},
+  "Israel":          {flag:"🇮🇱",r:"r-mena",tag:"The Promised Land & the Occupation",capital:"Jerusalem",cx:521,cy:218},
+  "Palestine":       {flag:"🇵🇸",r:"r-mena",tag:"A People's Struggle for Statehood",capital:"Ramallah",cx:521,cy:220},
+  "Lebanon":         {flag:"🇱🇧",r:"r-mena",tag:"The Paris of the Middle East in Collapse",capital:"Beirut",cx:524,cy:213},
+  "Yemen":           {flag:"🇾🇪",r:"r-mena",tag:"The World's Worst Humanitarian Catastrophe",capital:"Sana'a",cx:548,cy:265},
+  "Jordan":          {flag:"🇯🇴",r:"r-mena",tag:"Hashemite Kingdom & the Desert Rose",capital:"Amman",cx:526,cy:219},
+  "Libya":           {flag:"🇱🇾",r:"r-mena",tag:"After Gaddafi — Chaos & Civil War",capital:"Tripoli",cx:482,cy:218},
+  "Morocco":         {flag:"🇲🇦",r:"r-mena",tag:"Kingdom of the Sunset — Berbers & Sultans",capital:"Rabat",cx:437,cy:210},
+  "Algeria":         {flag:"🇩🇿",r:"r-mena",tag:"War of Independence & Saharan Depths",capital:"Algiers",cx:457,cy:210},
+  "Tunisia":         {flag:"🇹🇳",r:"r-mena",tag:"Carthage, Hannibal & the Arab Spring",capital:"Tunis",cx:470,cy:207},
+  "Sudan":           {flag:"🇸🇩",r:"r-mena",tag:"Darfur Genocide & Partition",capital:"Khartoum",cx:524,cy:263},
+  "UAE":             {flag:"🇦🇪",r:"r-mena",tag:"From Desert to Global Hub in 50 Years",capital:"Abu Dhabi",cx:567,cy:248},
+  "Afghanistan":     {flag:"🇦🇫",r:"r-mena",tag:"The Graveyard of Empires",capital:"Kabul",cx:597,cy:218},
+  "Qatar":           {flag:"🇶🇦",r:"r-mena",tag:"Gas, Football & Controversies",capital:"Doha",cx:558,cy:242},
+  "Kuwait":          {flag:"🇰🇼",r:"r-mena",tag:"Oil, Invasion & Reconstruction",capital:"Kuwait City",cx:554,cy:231},
+  "China":           {flag:"🇨🇳",r:"r-asia",tag:"5,000 Years of Continuous Civilisation",capital:"Beijing",cx:706,cy:210},
+  "Japan":           {flag:"🇯🇵",r:"r-asia",tag:"Land of the Rising Sun — Samurai to Superpower",capital:"Tokyo",cx:752,cy:210},
+  "India":           {flag:"🇮🇳",r:"r-asia",tag:"The Subcontinent — Indus Valley to Nuclear Power",capital:"New Delhi",cx:633,cy:245},
+  "South Korea":     {flag:"🇰🇷",r:"r-asia",tag:"The Miracle on the Han River",capital:"Seoul",cx:735,cy:212},
+  "North Korea":     {flag:"🇰🇵",r:"r-asia",tag:"The Hermit Kingdom — Dynasty of Isolation",capital:"Pyongyang",cx:732,cy:205},
+  "Vietnam":         {flag:"🇻🇳",r:"r-asia",tag:"A Nation That Defeated Three Empires",capital:"Hanoi",cx:706,cy:263},
+  "Indonesia":       {flag:"🇮🇩",r:"r-asia",tag:"17,000 Islands — Largest Archipelago",capital:"Jakarta",cx:715,cy:320},
+  "Philippines":     {flag:"🇵🇭",r:"r-asia",tag:"7,641 Islands — Pearl of the Orient Seas",capital:"Manila",cx:735,cy:278},
+  "Pakistan":        {flag:"🇵🇰",r:"r-asia",tag:"Land of the Pure — Nuclear State in Crisis",capital:"Islamabad",cx:612,cy:222},
+  "Bangladesh":      {flag:"🇧🇩",r:"r-asia",tag:"Born in Blood — 1971 Genocide",capital:"Dhaka",cx:657,cy:249},
+  "Thailand":        {flag:"🇹🇭",r:"r-asia",tag:"Land of Smiles — Temples & Coups",capital:"Bangkok",cx:697,cy:267},
+  "Myanmar":         {flag:"🇲🇲",r:"r-asia",tag:"The Golden Land — Genocide & Military Rule",capital:"Naypyidaw",cx:681,cy:257},
+  "Cambodia":        {flag:"🇰🇭",r:"r-asia",tag:"Angkor Wat & the Killing Fields",capital:"Phnom Penh",cx:706,cy:277},
+  "Mongolia":        {flag:"🇲🇳",r:"r-asia",tag:"Genghis Khan & the World's Greatest Empire",capital:"Ulaanbaatar",cx:695,cy:175},
+  "Malaysia":        {flag:"🇲🇾",r:"r-asia",tag:"Rainforests, Sultans & Tiger Economy",capital:"Kuala Lumpur",cx:706,cy:295},
+  "Singapore":       {flag:"🇸🇬",r:"r-asia",tag:"From Fishing Village to Financial Capital",capital:"Singapore",cx:710,cy:303},
+  "Sri Lanka":       {flag:"🇱🇰",r:"r-oceania",tag:"Pearl of Indian Ocean — Civil War",capital:"Colombo",cx:643,cy:285},
+  "Nepal":           {flag:"🇳🇵",r:"r-asia",tag:"Himalayan Kingdom — Everest & Revolution",capital:"Kathmandu",cx:645,cy:237},
+  "Taiwan":          {flag:"🇹🇼",r:"r-asia",tag:"The Other China — Democracy Under Threat",capital:"Taipei",cx:730,cy:250},
+  "Hong Kong":       {flag:"🇭🇰",r:"r-asia",tag:"From British Colony to Beijing's Grip",capital:"Hong Kong",cx:721,cy:255},
+  "Kazakhstan":      {flag:"🇰🇿",r:"r-asia",tag:"Steppe Giant — Soviet Legacy & Resources",capital:"Astana",cx:620,cy:178},
+  "Nigeria":         {flag:"🇳🇬",r:"r-africa",tag:"Giant of Africa — Oil & 220 Million People",capital:"Abuja",cx:467,cy:275},
+  "South Africa":    {flag:"🇿🇦",r:"r-africa",tag:"Apartheid, Mandela & the Rainbow Nation",capital:"Pretoria",cx:511,cy:365},
+  "Ethiopia":        {flag:"🇪🇹",r:"r-africa",tag:"Cradle of Mankind — Never Colonised",capital:"Addis Ababa",cx:539,cy:274},
+  "Kenya":           {flag:"🇰🇪",r:"r-africa",tag:"Safari, Mau Mau & the Great Rift Valley",capital:"Nairobi",cx:534,cy:292},
+  "Tanzania":        {flag:"🇹🇿",r:"r-africa",tag:"Kilimanjaro, Zanzibar & Ujamaa",capital:"Dodoma",cx:528,cy:312},
+  "Congo":           {flag:"🇨🇩",r:"r-africa",tag:"Leopold's Horror — The Heart of Darkness",capital:"Kinshasa",cx:498,cy:305},
+  "Ghana":           {flag:"🇬🇭",r:"r-africa",tag:"Gold Coast — First Sub-Saharan Independence",capital:"Accra",cx:454,cy:276},
+  "Rwanda":          {flag:"🇷🇼",r:"r-africa",tag:"100 Days of Genocide & Miraculous Recovery",capital:"Kigali",cx:519,cy:307},
+  "Somalia":         {flag:"🇸🇴",r:"r-africa",tag:"Failed State, Pirates & Al-Shabaab",capital:"Mogadishu",cx:550,cy:284},
+  "Zimbabwe":        {flag:"🇿🇼",r:"r-africa",tag:"Mugabe, Hyperinflation & Recovery",capital:"Harare",cx:515,cy:348},
+  "Mali":            {flag:"🇲🇱",r:"r-africa",tag:"Empire of Gold, Salt & Timbuktu",capital:"Bamako",cx:447,cy:255},
+  "Senegal":         {flag:"🇸🇳",r:"r-africa",tag:"West African Gateway — Gorée Island",capital:"Dakar",cx:420,cy:258},
+  "Madagascar":      {flag:"🇲🇬",r:"r-oceania",tag:"The Red Island — Unique Ecosystem",capital:"Antananarivo",cx:555,cy:352},
+  "Mozambique":      {flag:"🇲🇿",r:"r-africa",tag:"Civil War & Portuguese Legacy",capital:"Maputo",cx:524,cy:350},
+  "Angola":          {flag:"🇦🇴",r:"r-africa",tag:"27 Years of Civil War — Oil & Diamonds",capital:"Luanda",cx:490,cy:318},
+  "South Sudan":     {flag:"🇸🇸",r:"r-africa",tag:"World's Newest Nation — Born Into War",capital:"Juba",cx:521,cy:278},
+  "Cameroon":        {flag:"🇨🇲",r:"r-africa",tag:"Africa in Miniature",capital:"Yaoundé",cx:481,cy:278},
+  "United States":   {flag:"🇺🇸",r:"r-americas",tag:"From Colony to Global Hegemon",capital:"Washington D.C.",cx:185,cy:205},
+  "Mexico":          {flag:"🇲🇽",r:"r-americas",tag:"Aztecs, Cartels, NAFTA & the Shadow of the North",capital:"Mexico City",cx:162,cy:248},
+  "Brazil":          {flag:"🇧🇷",r:"r-americas",tag:"Largest in Latin America — Dictatorship to Lula",capital:"Brasília",cx:270,cy:328},
+  "Argentina":       {flag:"🇦🇷",r:"r-americas",tag:"Peronism, the Dirty War & Milei",capital:"Buenos Aires",cx:248,cy:385},
+  "Colombia":        {flag:"🇨🇴",r:"r-americas",tag:"FARC, Escobar & the Peace Process",capital:"Bogotá",cx:222,cy:285},
+  "Venezuela":       {flag:"🇻🇪",r:"r-americas",tag:"Oil Riches Turned Humanitarian Disaster",capital:"Caracas",cx:237,cy:270},
+  "Cuba":            {flag:"🇨🇺",r:"r-americas",tag:"Revolution, Embargo & Che Guevara",capital:"Havana",cx:210,cy:255},
+  "Haiti":           {flag:"🇭🇹",r:"r-americas",tag:"First Black Republic — Cursed by History",capital:"Port-au-Prince",cx:228,cy:258},
+  "Chile":           {flag:"🇨🇱",r:"r-americas",tag:"Pinochet, Allende & the Long Thin Country",capital:"Santiago",cx:232,cy:378},
+  "Peru":            {flag:"🇵🇪",r:"r-americas",tag:"Land of the Incas — Machu Picchu",capital:"Lima",cx:218,cy:320},
+  "Bolivia":         {flag:"🇧🇴",r:"r-americas",tag:"Roof of the World — Lithium & Evo Morales",capital:"Sucre",cx:237,cy:342},
+  "Canada":          {flag:"🇨🇦",r:"r-americas",tag:"From Colonies to Multicultural Superstate",capital:"Ottawa",cx:195,cy:165},
+  "Guatemala":       {flag:"🇬🇹",r:"r-americas",tag:"Maya, CIA Coup & Civil War Genocide",capital:"Guatemala City",cx:177,cy:263},
+  "Ecuador":         {flag:"🇪🇨",r:"r-americas",tag:"Galápagos, Oil & Indigenous Rights",capital:"Quito",cx:209,cy:298},
+  "Paraguay":        {flag:"🇵🇾",r:"r-americas",tag:"Stroessner — The Forgotten Dictatorship",capital:"Asunción",cx:252,cy:360},
+  "Uruguay":         {flag:"🇺🇾",r:"r-americas",tag:"Switzerland of Latin America",capital:"Montevideo",cx:257,cy:378},
+  "Jamaica":         {flag:"🇯🇲",r:"r-americas",tag:"Reggae, Rastafari & Slavery's Legacy",capital:"Kingston",cx:218,cy:262},
+  "Puerto Rico":     {flag:"🇵🇷",r:"r-americas",tag:"Island Colony — US Territory",capital:"San Juan",cx:237,cy:261},
+  "Australia":       {flag:"🇦🇺",r:"r-oceania",tag:"From Aboriginal Dreamtime to the Lucky Country",capital:"Canberra",cx:779,cy:380},
+  "New Zealand":     {flag:"🇳🇿",r:"r-oceania",tag:"Māori, ANZAC & Progressive Democracy",capital:"Wellington",cx:822,cy:407},
+  "Papua New Guinea":{flag:"🇵🇬",r:"r-oceania",tag:"World's Most Diverse Island — 800+ Languages",capital:"Port Moresby",cx:775,cy:320},
+  "Hawaii":          {flag:"🌺",r:"r-oceania",tag:"The Stolen Kingdom — Paradise & US Annexation",capital:"Honolulu",cx:110,cy:240},
+  "Philippines":     {flag:"🇵🇭",r:"r-asia",tag:"7,641 Islands — Pearl of the Orient Seas",capital:"Manila",cx:735,cy:278},
+  "Fiji":            {flag:"🇫🇯",r:"r-oceania",tag:"Paradise of Coups",capital:"Suva",cx:843,cy:358},
+  "Taiwan":          {flag:"🇹🇼",r:"r-asia",tag:"The Other China — Democracy Under Threat",capital:"Taipei",cx:730,cy:250},
+  "Timor-Leste":     {flag:"🇹🇱",r:"r-asia",tag:"Indonesian Occupation & Hard-Won Independence",capital:"Dili",cx:752,cy:330},
+  "Iceland":         {flag:"🇮🇸",r:"r-europe",tag:"Land of Fire & Ice",capital:"Reykjavik",cx:384,cy:103},
+  "Greenland":       {flag:"🏔",r:"r-europe",tag:"World's Largest Island — Inuit & Climate",capital:"Nuuk",cx:285,cy:85},
+  "Maldives":        {flag:"🇲🇻",r:"r-oceania",tag:"1,200 Islands Sinking Into the Sea",capital:"Malé",cx:630,cy:295},
+  "Seychelles":      {flag:"🇸🇨",r:"r-africa",tag:"Eden of the Indian Ocean",capital:"Victoria",cx:590,cy:310},
+  "Mauritius":       {flag:"🇲🇺",r:"r-africa",tag:"Dodo's Island — African Success Story",capital:"Port Louis",cx:601,cy:372},
+  "Cape Verde":      {flag:"🇨🇻",r:"r-africa",tag:"Transatlantic Crossroads",capital:"Praia",cx:395,cy:260},
+  "Comoros":         {flag:"🇰🇲",r:"r-africa",tag:"20 Coups in 40 Years",capital:"Moroni",cx:561,cy:338},
+  "Zanzibar":        {flag:"🏝",r:"r-africa",tag:"The Spice Island — Slave Trade & Stone Town",capital:"Stone Town",cx:535,cy:318},
+  "Okinawa":         {flag:"🏝",r:"r-asia",tag:"Ryukyu Kingdom — US Bases & WWII",capital:"Naha",cx:738,cy:238},
+  "Easter Island":   {flag:"🏝",r:"r-oceania",tag:"Rapa Nui — Moai & Ecological Collapse",capital:"Hanga Roa",cx:157,cy:370},
+  "Tahiti":          {flag:"🏝",r:"r-oceania",tag:"French Polynesia — Gauguin & Nuclear Tests",capital:"Papeete",cx:113,cy:348},
+  "Corsica":         {flag:"🏝",r:"r-europe",tag:"Napoleon's Birthplace",capital:"Ajaccio",cx:463,cy:192},
+  "Sicily":          {flag:"🏝",r:"r-europe",tag:"Crossroads of Civilisations — Mafia & Antiquity",capital:"Palermo",cx:476,cy:205},
+  "Crete":           {flag:"🏝",r:"r-europe",tag:"Minoan Civilisation — Europe's Oldest Culture",capital:"Heraklion",cx:501,cy:213},
+  "Malta":           {flag:"🇲🇹",r:"r-europe",tag:"Island Fortress — Crusaders & WWII Blitz",capital:"Valletta",cx:476,cy:209},
+  "Martinique":      {flag:"🏝",r:"r-americas",tag:"French Caribbean — Josephine & Slavery",capital:"Fort-de-France",cx:241,cy:273},
+  "Réunion":         {flag:"🏝",r:"r-africa",tag:"Indian Ocean Melting Pot",capital:"Saint-Denis",cx:580,cy:363},
+  "Guam":            {flag:"🇬🇺",r:"r-oceania",tag:"Chamorro — America's Pacific Fortress",capital:"Hagåtña",cx:760,cy:272},
+  "New Caledonia":   {flag:"🏝",r:"r-oceania",tag:"Nickel, Kanaks & France's Pacific Outpost",capital:"Nouméa",cx:805,cy:368},
+  "Macau":           {flag:"🇲🇴",r:"r-asia",tag:"450 Years Portuguese — Now Asia's Las Vegas",capital:"Macau",cx:721,cy:256},
+  "Solomon Islands": {flag:"🇸🇧",r:"r-oceania",tag:"WWII Guadalcanal & Ethnic Tensions",capital:"Honiara",cx:802,cy:340},
+  "Vanuatu":         {flag:"🇻🇺",r:"r-oceania",tag:"Cargo Cults, Volcanoes & New Hebrides",capital:"Port Vila",cx:803,cy:355},
+  "Samoa":           {flag:"🇼🇸",r:"r-oceania",tag:"Polynesian Heart",capital:"Apia",cx:858,cy:342},
+  "Tonga":           {flag:"🇹🇴",r:"r-oceania",tag:"The Last Polynesian Kingdom",capital:"Nuku'alofa",cx:852,cy:356},
+  // Ancient/Special
+  "Byzantine Empire":{flag:"⚜",r:"r-europe",tag:"Eastern Rome — 1,058 Years of Continuity",capital:"Constantinople"},
+  "Roman Empire":    {flag:"🦅",r:"r-europe",tag:"SPQR — The Greatest Empire of the Ancient World",capital:"Rome"},
+  "Ottoman Empire":  {flag:"☪",r:"r-mena",tag:"600 Years — From Anatolia to Three Continents",capital:"Constantinople"},
+  "Mongol Empire":   {flag:"🐎",r:"r-asia",tag:"The Largest Contiguous Empire in History",capital:"Karakorum"},
+  "Aztec Empire":    {flag:"🌞",r:"r-americas",tag:"Tenochtitlán — Sacrifice, Gold & Cortés",capital:"Tenochtitlán"},
+  "Inca Empire":     {flag:"🦙",r:"r-americas",tag:"Children of the Sun — Andes to Pacific",capital:"Cusco"},
+  "Carthage":        {flag:"🐘",r:"r-mena",tag:"Hannibal's City — Rome's Greatest Rival",capital:"Carthage"},
+  "Ancient Egypt":   {flag:"𓂀",r:"r-mena",tag:"3,000 Years of Pharaohs & Gods",capital:"Memphis"},
+  "Persian Empire":  {flag:"🦁",r:"r-mena",tag:"Achaemenid & Sassanid — The Persian World",capital:"Persepolis"},
+};
+
+// KEY BATTLES DATABASE
+const BATTLES = {
+  "France": [
+    {name:"Battle of Verdun",date:"Feb–Dec 1916",x:459,y:174,desc:"One of the longest and bloodiest battles of WWI. France vs Germany. 700,000 casualties. French motto: 'They shall not pass.'"},
+    {name:"Battle of the Marne",date:"Sep 1914",x:457,y:177,desc:"Decisive WWI battle stopping the German advance on Paris. Marked the beginning of trench warfare."},
+    {name:"D-Day — Normandy",date:"June 6, 1944",x:447,y:172,desc:"The largest seaborne invasion in history. 156,000 Allied troops landed on 5 beaches. Beginning of the liberation of France."},
+    {name:"Battle of Waterloo",date:"June 18, 1815",x:456,y:162,desc:"Napoleon's final defeat. Coalition forces under Wellington and Blücher ended the Napoleonic era. 47,000 casualties."},
+  ],
+  "Russia": [
+    {name:"Battle of Stalingrad",date:"Aug 1942–Feb 1943",x:548,y:180,desc:"The bloodiest battle in human history. 2 million casualties. German 6th Army surrounded and destroyed. Turning point of WWII."},
+    {name:"Siege of Leningrad",date:"Sep 1941–Jan 1944",x:519,y:133,desc:"872-day German siege. Over 1 million civilian deaths from starvation. One of the longest and most destructive sieges in history."},
+    {name:"Battle of Kursk",date:"Jul–Aug 1943",x:530,y:160,desc:"Largest tank battle in history. Over 8,000 tanks. Soviet victory ended German offensive capability on the Eastern Front."},
+  ],
+  "United Kingdom": [
+    {name:"Battle of Hastings",date:"Oct 14, 1066",x:441,y:162,desc:"William the Conqueror defeated King Harold. Changed English language, culture and governance forever. Norman conquest began."},
+    {name:"Battle of the Somme",date:"Jul–Nov 1916",x:450,y:167,desc:"60,000 British casualties on the first day alone. 1 million total casualties. One of WWI's most devastating battles."},
+    {name:"Battle of Britain",date:"Jul–Oct 1940",x:440,y:158,desc:"RAF vs Luftwaffe. First major battle fought entirely by air forces. German defeat prevented invasion of Britain."},
+  ],
+  "Germany": [
+    {name:"Battle of Berlin",date:"Apr–May 1945",x:476,y:158,desc:"Final Soviet assault on Nazi Germany's capital. 80,000+ Soviet casualties. Hitler's suicide. End of WWII in Europe."},
+  ],
+  "United States": [
+    {name:"Battle of Gettysburg",date:"Jul 1–3, 1863",x:202,y:198,desc:"Bloodiest battle of the Civil War. 51,000 casualties. Union victory ended Lee's Northern invasion. Turning point of the war."},
+    {name:"Battle of Midway",date:"Jun 4–7, 1942",x:100,y:225,desc:"Naval battle in WWII Pacific. US destroyed 4 Japanese carriers. Turned the tide of the Pacific War."},
+    {name:"Battle of Iwo Jima",date:"Feb–Mar 1945",x:755,y:235,desc:"US Marines vs entrenched Japanese forces. 26,000 US casualties. Home of the famous flag-raising photograph."},
+  ],
+  "Japan": [
+    {name:"Battle of Sekigahara",date:"Oct 21, 1600",x:748,y:215,desc:"Decisive battle unifying Japan under Tokugawa. 160,000 combatants. Ended the Sengoku period of warring states."},
+    {name:"Hiroshima",date:"Aug 6, 1945",x:737,y:220,desc:"First atomic bomb used in warfare. 80,000 immediate deaths. 90% of city destroyed. Japan surrendered 9 days later."},
+  ],
+  "Egypt": [
+    {name:"Battle of the Pyramids",date:"Jul 21, 1798",x:517,y:232,desc:"Napoleon defeated Egyptian Mamelukes in sight of the pyramids. French occupation of Egypt began."},
+    {name:"Battle of El Alamein",date:"Oct–Nov 1942",x:512,y:226,desc:"Montgomery's 8th Army defeated Rommel's Afrika Korps. Turning point in the North African campaign of WWII."},
+  ],
+  "China": [
+    {name:"Battle of Red Cliffs",date:"208–209 AD",x:706,y:230,desc:"Liu Bei and Sun Quan's navies defeated Cao Cao's fleet. One of history's greatest naval battles. Prevented unification of China."},
+    {name:"Battle of Talas",date:"751 AD",x:630,y:195,desc:"Tang China vs Abbasid Caliphate. Arab victory halted Chinese expansion westward. Paper-making technology spread to Islamic world."},
+  ],
+  "Vietnam": [
+    {name:"Battle of Dien Bien Phu",date:"Mar–May 1954",x:696,y:253,desc:"Viet Minh surrounded French forces. 16,000 French captured. Ended French colonialism in Indochina. Shocked the Western world."},
+    {name:"Battle of Hue",date:"Jan–Mar 1968",x:707,y:260,desc:"Tet Offensive. Viet Cong held the ancient citadel for 26 days. 10,000 deaths. Turned US public opinion against the Vietnam War."},
+  ],
+  "Iraq": [
+    {name:"Battle of Baghdad",date:"Apr 2003",x:549,y:223,desc:"US-led coalition seized the Iraqi capital in 21 days. Saddam Hussein's statue toppled. Beginning of the Iraq insurgency."},
+  ],
+};
+
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+let cur=null, loaded={};
+let mapZoom=1, mapPanX=0, mapPanY=0;
+let isDragging=false, dragStart={x:0,y:0};
+
+// ══════════════════════════════════════════════
+// MAP LOADING
+// ══════════════════════════════════════════════
+function loadSc(src,cb){const s=document.createElement('script');s.src=src;s.onload=cb;document.head.appendChild(s)}
+
+function loadMap(){
+  loadSc('https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js',()=>{
+    loadSc('https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js',()=>{
       fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
-        .then(r => r.json()).then(renderMap)
-        .catch(() => { document.getElementById('mload').textContent = '⚠ Map unavailable — use search above'; });
+        .then(r=>r.json()).then(renderMap)
+        .catch(()=>{document.getElementById('mload').textContent='⚠ Map unavailable — use search';});
     });
   });
 }
 
-function renderMap(world) {
-  document.getElementById('mload').style.display = 'none';
-  const layer = document.getElementById('clayer');
-  const features = topojson.feature(world, world.objects.countries).features;
-  const proj = d3.geoNaturalEarth1().scale(153).translate([480, 250]);
-  const path = d3.geoPath().projection(proj);
-  const names = isoMap();
+function renderMap(world){
+  document.getElementById('mload').style.display='none';
+  const layer=document.getElementById('clayer');
+  const cityLayer=document.getElementById('city-layer');
+  const features=topojson.feature(world,world.objects.countries).features;
+  const proj=d3.geoNaturalEarth1().scale(153).translate([480,250]);
+  const path=d3.geoPath().projection(proj);
+  const names=isoMap();
 
-  features.forEach(f => {
-    const name = names[f.id] || null;
-    const d = path(f); if (!d) return;
-    const info = name ? findInfo(name) : null;
-    const el = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    el.setAttribute('d', d);
-    el.setAttribute('data-name', name || 'Unknown');
+  features.forEach(f=>{
+    const name=names[f.id]||null;
+    const d=path(f); if(!d)return;
+    const info=name?findInfo(name):null;
+    const el=document.createElementNS('http://www.w3.org/2000/svg','path');
+    el.setAttribute('d',d);
+    el.setAttribute('data-name',name||'Unknown');
     el.classList.add('cp');
-    if (info) el.classList.add(info.r); else el.style.fill = '#b8a870';
-    el.addEventListener('mouseenter', e => showTT(e, name, info));
-    el.addEventListener('mousemove', moveTT);
-    el.addEventListener('mouseleave', hideTT);
-    el.addEventListener('click', () => openC(name || 'Unknown Territory', info));
+    if(info) el.classList.add(info.r); else el.style.fill='#b8a870';
+    el.addEventListener('mouseenter',e=>showTT(e,name,info));
+    el.addEventListener('mousemove',moveTT);
+    el.addEventListener('mouseleave',hideTT);
+    el.addEventListener('click',()=>openC(name||'Unknown Territory',info));
     layer.appendChild(el);
   });
 
+  // Capital cities
+  Object.entries(DB).forEach(([name,info])=>{
+    if(!info.cx||!info.cy) return;
+    const g=document.createElementNS('http://www.w3.org/2000/svg','g');
+    const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',info.cx); c.setAttribute('cy',info.cy); c.setAttribute('r','1.8');
+    c.classList.add('capital-dot');
+    const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',info.cx+3); t.setAttribute('y',info.cy+2);
+    t.classList.add('city-label');
+    t.textContent=info.capital||'';
+    g.appendChild(c); g.appendChild(t);
+    g.addEventListener('mouseenter',e=>showTT(e,info.capital+' ('+name+')',info));
+    g.addEventListener('mousemove',moveTT);
+    g.addEventListener('mouseleave',hideTT);
+    g.addEventListener('click',()=>openC(name,info));
+    cityLayer.appendChild(g);
+  });
+
   // Island dots
-  [
-    {n:"Hawaii",x:110,y:240},{n:"Iceland",x:330,y:98},{n:"Cuba",x:210,y:258},
-    {n:"Puerto Rico",x:237,y:264},{n:"Jamaica",x:218,y:267},{n:"Taiwan",x:730,y:250},
-    {n:"Philippines",x:735,y:280},{n:"Madagascar",x:583,y:354},{n:"Sri Lanka",x:645,y:294},
-    {n:"Maldives",x:627,y:306},{n:"Malta",x:476,y:205},{n:"Cyprus",x:518,y:205},
-    {n:"Crete",x:495,y:210},{n:"Sicily",x:469,y:202},{n:"Corsica",x:457,y:188},
-    {n:"Fiji",x:813,y:357},{n:"New Caledonia",x:803,y:368},{n:"Easter Island",x:157,y:370},
-    {n:"Tahiti",x:132,y:348},{n:"Zanzibar",x:565,y:330},{n:"Cape Verde",x:379,y:266},
-    {n:"Réunion",x:596,y:366},{n:"Mauritius",x:601,y:372},{n:"Seychelles",x:590,y:315},
-    {n:"Comoros",x:579,y:340},{n:"Okinawa",x:748,y:238},{n:"Timor-Leste",x:752,y:330},
-    {n:"Greenland",x:268,y:68},{n:"Guam",x:783,y:272},{n:"Martinique",x:241,y:273},
-    {n:"Macau",x:721,y:255},{n:"Hong Kong",x:724,y:254},{n:"Vanuatu",x:800,y:352},
-    {n:"Solomon Islands",x:790,y:338},{n:"Samoa",x:840,y:340},{n:"Tonga",x:848,y:352},
-  ].forEach(isl => {
-    const info = findInfo(isl.n);
-    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    g.setAttribute('data-name', isl.n); g.style.cursor = 'pointer';
-    const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    c.setAttribute('cx', isl.x); c.setAttribute('cy', isl.y); c.setAttribute('r', '4');
-    c.style.cssText = 'fill:#9abba5;stroke:#6b4423;stroke-width:1;transition:r .15s';
+  const islands=[
+    {n:"Hawaii",x:110,y:240},{n:"Taiwan",x:730,y:250},{n:"Philippines",x:735,y:280},
+    {n:"Madagascar",x:583,y:354},{n:"Sri Lanka",x:645,y:294},{n:"Maldives",x:627,y:306},
+    {n:"Malta",x:476,y:205},{n:"Cyprus",x:518,y:205},{n:"Crete",x:495,y:210},
+    {n:"Sicily",x:469,y:202},{n:"Corsica",x:457,y:188},{n:"Fiji",x:813,y:357},
+    {n:"New Caledonia",x:803,y:368},{n:"Easter Island",x:157,y:370},{n:"Tahiti",x:132,y:348},
+    {n:"Zanzibar",x:565,y:330},{n:"Cape Verde",x:379,y:266},{n:"Réunion",x:596,y:366},
+    {n:"Mauritius",x:601,y:372},{n:"Seychelles",x:590,y:315},{n:"Comoros",x:579,y:340},
+    {n:"Okinawa",x:748,y:238},{n:"Timor-Leste",x:752,y:330},{n:"Greenland",x:268,y:68},
+    {n:"Guam",x:783,y:272},{n:"Martinique",x:241,y:273},{n:"Macau",x:721,y:256},
+    {n:"Hong Kong",x:724,y:254},{n:"Vanuatu",x:800,y:352},{n:"Solomon Islands",x:790,y:338},
+    {n:"Samoa",x:840,y:340},{n:"Tonga",x:848,y:352},{n:"Jamaica",x:218,y:267},
+    {n:"Puerto Rico",x:237,y:264},{n:"Cuba",x:210,y:258},{n:"Haiti",x:228,y:261},
+    {n:"Iceland",x:384,y:103},{n:"Malta",x:476,y:209},
+  ];
+  islands.forEach(isl=>{
+    const info=findInfo(isl.n); if(!info) return;
+    const g=document.createElementNS('http://www.w3.org/2000/svg','g');
+    g.setAttribute('data-name',isl.n); g.style.cursor='pointer';
+    const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',isl.x); c.setAttribute('cy',isl.y); c.setAttribute('r','3.5');
+    c.style.cssText='fill:#9abba5;stroke:#6b4423;stroke-width:.8;transition:r .15s';
     g.appendChild(c);
-    g.addEventListener('mouseenter', e => { c.setAttribute('r','6'); showTT(e, isl.n, info); });
-    g.addEventListener('mousemove', moveTT);
-    g.addEventListener('mouseleave', () => { c.setAttribute('r','4'); hideTT(); });
-    g.addEventListener('click', () => openC(isl.n, info));
+    g.addEventListener('mouseenter',e=>{c.setAttribute('r','5');showTT(e,isl.n,info);});
+    g.addEventListener('mousemove',moveTT);
+    g.addEventListener('mouseleave',()=>{c.setAttribute('r','3.5');hideTT();});
+    g.addEventListener('click',()=>openC(isl.n,info));
+    layer.appendChild(g);
+  });
+
+  setupMapInteraction();
+}
+
+// MAP ZOOM & PAN
+function setupMapInteraction(){
+  const wrap=document.getElementById('svgwrap');
+  const map=document.getElementById('wmap');
+
+  wrap.addEventListener('wheel',e=>{
+    e.preventDefault();
+    const factor=e.deltaY<0?1.15:0.87;
+    const rect=wrap.getBoundingClientRect();
+    const mx=e.clientX-rect.left, my=e.clientY-rect.top;
+    const newZoom=Math.max(1,Math.min(8,mapZoom*factor));
+    mapPanX=(mapPanX-mx)*newZoom/mapZoom+mx;
+    mapPanY=(mapPanY-my)*newZoom/mapZoom+my;
+    mapZoom=newZoom;
+    clampPan(wrap,map);
+    applyTransform(map);
+  },{passive:false});
+
+  wrap.addEventListener('mousedown',e=>{
+    if(e.target.classList.contains('cp')||e.target.closest('.battle-marker')) return;
+    isDragging=true; dragStart={x:e.clientX-mapPanX,y:e.clientY-mapPanY};
+    wrap.style.cursor='grabbing';
+  });
+  window.addEventListener('mousemove',e=>{
+    if(!isDragging)return;
+    mapPanX=e.clientX-dragStart.x; mapPanY=e.clientY-dragStart.y;
+    const mapEl=document.getElementById('wmap');
+    clampPan(document.getElementById('svgwrap'),mapEl);
+    applyTransform(mapEl);
+  });
+  window.addEventListener('mouseup',()=>{isDragging=false; wrap.style.cursor='grab';});
+
+  // Touch support
+  let lastTouchDist=0;
+  wrap.addEventListener('touchstart',e=>{
+    if(e.touches.length===2) lastTouchDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+  },{passive:true});
+  wrap.addEventListener('touchmove',e=>{
+    if(e.touches.length===2){
+      const dist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+      const factor=dist/lastTouchDist;
+      mapZoom=Math.max(1,Math.min(8,mapZoom*factor));
+      lastTouchDist=dist;
+      applyTransform(document.getElementById('wmap'));
+    }
+  },{passive:true});
+}
+
+function applyTransform(map){
+  map.style.transform=`translate(${mapPanX}px,${mapPanY}px) scale(${mapZoom})`;
+  // Scale city labels inversely so they stay readable
+  document.querySelectorAll('.city-label').forEach(t=>{
+    t.style.fontSize=(5/mapZoom)+'px';
+    t.style.opacity=mapZoom>2?'1':'0';
+  });
+  document.querySelectorAll('.capital-dot').forEach(c=>{
+    const r=Math.max(.5,1.8/mapZoom);
+    c.setAttribute('r',r);
+    c.style.opacity=mapZoom>1.5?'1':'0.3';
+  });
+}
+
+function clampPan(wrap,map){
+  const ww=wrap.clientWidth, wh=wrap.clientHeight;
+  const mw=ww*mapZoom, mh=wh*mapZoom;
+  mapPanX=Math.min(0,Math.max(mapPanX,ww-mw));
+  mapPanY=Math.min(0,Math.max(mapPanY,wh-mh));
+}
+
+function zoomMap(factor){
+  const wrap=document.getElementById('svgwrap');
+  const map=document.getElementById('wmap');
+  const cx=wrap.clientWidth/2, cy=wrap.clientHeight/2;
+  const newZoom=Math.max(1,Math.min(8,mapZoom*factor));
+  mapPanX=(mapPanX-cx)*newZoom/mapZoom+cx;
+  mapPanY=(mapPanY-cy)*newZoom/mapZoom+cy;
+  mapZoom=newZoom;
+  clampPan(wrap,map);
+  applyTransform(map);
+}
+
+function resetZoom(){
+  mapZoom=1; mapPanX=0; mapPanY=0;
+  applyTransform(document.getElementById('wmap'));
+}
+
+// TOOLTIP
+const ttEl=document.getElementById('tt');
+function showTT(e,name,info){
+  ttEl.style.display='block';
+  ttEl.innerHTML=(info?info.flag+' ':'🌍 ')+'<strong>'+(name||'?')+'</strong>'+(info&&info.capital?'<br><small style="opacity:.7">⚐ '+info.capital+'</small>':'');
+  moveTT(e);
+}
+function moveTT(e){ttEl.style.left=(e.clientX+14)+'px';ttEl.style.top=(e.clientY-36)+'px';}
+function hideTT(){ttEl.style.display='none';}
+
+// BATTLE MARKERS
+function showBattleMarkers(country){
+  const layer=document.getElementById('battle-layer');
+  layer.innerHTML='';
+  const battles=BATTLES[country];
+  if(!battles) return;
+  battles.forEach(b=>{
+    const g=document.createElementNS('http://www.w3.org/2000/svg','g');
+    g.classList.add('battle-marker');
+    g.setAttribute('data-battle',b.name);
+
+    const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',b.x); c.setAttribute('cy',b.y); c.setAttribute('r','5');
+    c.style.cssText='fill:#8b1a1a;stroke:#f4e8c1;stroke-width:1.5;opacity:.85';
+
+    const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',b.x); t.setAttribute('y',b.y-8);
+    t.setAttribute('text-anchor','middle');
+    t.style.cssText='font-size:8px;fill:#8b1a1a;font-family:serif;pointer-events:none;font-weight:700';
+    t.textContent='⚔';
+
+    g.appendChild(c); g.appendChild(t);
+    g.addEventListener('click',e=>{e.stopPropagation();openBattlePopup(b,e);});
+    g.addEventListener('mouseenter',e=>{showTT(e,b.name+' ('+b.date+')',null);});
+    g.addEventListener('mousemove',moveTT);
+    g.addEventListener('mouseleave',hideTT);
     layer.appendChild(g);
   });
 }
 
-function findInfo(name) {
-  if (DB[name]) return DB[name];
-  const k = Object.keys(DB).find(k => name.toLowerCase().includes(k.toLowerCase()) || k.toLowerCase().includes(name.toLowerCase()));
-  return k ? DB[k] : null;
+function openBattlePopup(battle,e){
+  const popup=document.getElementById('battle-popup');
+  document.getElementById('bp-title').textContent=battle.name;
+  document.getElementById('bp-date').textContent='📅 '+battle.date;
+  document.getElementById('bp-body').innerHTML='<p>'+battle.desc+'</p><br><p class="bp-loading">Loading detailed analysis<span class="ldots"></span></p>';
+  popup.style.display='block';
+  popup.style.left=Math.min(e.clientX,window.innerWidth-400)+'px';
+  popup.style.top=Math.min(e.clientY-20,window.innerHeight-350)+'px';
+  // Fetch detailed content from API
+  fetchBattleDetail(battle);
 }
 
-const ttEl = document.getElementById('tt');
-function showTT(e, name, info) {
-  ttEl.style.display = 'block';
-  ttEl.innerHTML = (info ? info.flag + ' ' : '🌍 ') + '<strong>' + (name || '?') + '</strong>';
-  moveTT(e);
-}
-function moveTT(e) { ttEl.style.left=(e.clientX+14)+'px'; ttEl.style.top=(e.clientY-32)+'px'; }
-function hideTT() { ttEl.style.display='none'; }
-
-// ── OPEN COUNTRY ───────────────────────────────────────────
-function openC(name, info) {
-  cur = name; loaded = {};
-  document.getElementById('pflag').textContent = info ? info.flag : '🌍';
-  document.getElementById('pname').textContent = name;
-  document.getElementById('ptag').textContent  = info ? info.tag : '';
-  document.querySelectorAll('[data-name]').forEach(p => p.classList.remove('act'));
-  document.querySelectorAll(`[data-name="${name}"]`).forEach(p => p.classList.add('act'));
-  const panel = document.getElementById('panel');
-  panel.classList.add('vis');
-  // Reset all tabs
-  document.querySelectorAll('.tab').forEach(b => b.classList.remove('act'));
-  document.querySelectorAll('.tc').forEach(t => t.classList.remove('act'));
-  document.querySelector('[data-tab="overview"]').classList.add('act');
-  document.getElementById('tc-overview').classList.add('act');
-  // Clear all content
-  ['overview','antiquity','history','politics','leaders','culture','religion','celebrities','geopolitics','wars','crises','resources'].forEach(t => {
-    document.getElementById('cv-'+t).innerHTML = '';
-    const l = document.getElementById('l-'+t);
-    if (l) l.style.display = (t === 'overview') ? 'flex' : 'none';
-  });
-  loadTab('overview');
-  setTimeout(() => panel.scrollIntoView({ behavior:'smooth', block:'start' }), 100);
-}
-
-function closeP() {
-  document.getElementById('panel').classList.remove('vis');
-  document.querySelectorAll('[data-name]').forEach(p => p.classList.remove('act'));
-  cur = null;
-}
-
-function sw(tab, btn) {
-  document.querySelectorAll('.tab').forEach(b => b.classList.remove('act'));
-  document.querySelectorAll('.tc').forEach(t => t.classList.remove('act'));
-  btn.classList.add('act');
-  document.getElementById('tc-'+tab).classList.add('act');
-  if (cur && !loaded[tab]) loadTab(tab);
-}
-
-// ── LOAD TAB ───────────────────────────────────────────────
-async function loadTab(tab) {
-  tab = tab || 'overview';
-  if (loaded[tab] || !cur) return;
-  loaded[tab] = true;
-  const lEl = document.getElementById('l-'+tab);
-  const cEl = document.getElementById('cv-'+tab);
-  if (lEl) { lEl.style.display = 'flex'; cEl.innerHTML = ''; }
-
-  try {
-    const resp = await fetch(API_BASE + '/api/generate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ country: cur, tab })
+async function fetchBattleDetail(battle){
+  try{
+    const resp=await fetch(API_BASE+'/api/generate',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({country:battle.name+'_battle',tab:'battle',
+        battleName:battle.name,battleDate:battle.date,battleDesc:battle.desc})
     });
-
-    if (resp.status === 429) {
-      throw new Error('rate_limit');
-    }
-    if (!resp.ok) {
-      const e = await resp.json().catch(() => ({}));
-      throw new Error(e.error || `Server error ${resp.status}`);
-    }
-
-    const data = await resp.json();
-    if (lEl) lEl.style.display = 'none';
-    cEl.innerHTML = data.html || '<p class="ct">No content returned.</p>';
-    if (data.cached) {
-      cEl.insertAdjacentHTML('afterbegin', '<div style="font-family:\'Cinzel\',serif;font-size:.62rem;color:var(--inkf);margin-bottom:.8rem;opacity:.6">⚡ Served from cache</div>');
-    }
-
-  } catch (err) {
-    if (lEl) lEl.style.display = 'none';
-    const isRate = err.message === 'rate_limit';
-    cEl.innerHTML = `<div class="err-box">
-      <span class="err-lbl">⚠ ${isRate ? 'Too Many Requests' : 'Could Not Load'}</span>
-      <p class="ct">${isRate
-        ? 'You\'ve made many requests in a short time. Please wait a moment before continuing.'
-        : 'Could not load content for <strong>' + cur + '</strong>. This may be a temporary server issue — try clicking the tab again.'
-      }</p>
-      ${!isRate ? '<button class="btn" style="margin-top:.6rem" onclick="loaded[\'' + tab + '\']=false;loadTab(\'' + tab + '\')">↻ Retry</button>' : ''}
-    </div>`;
-    loaded[tab] = false;
+    const data=await resp.json();
+    const body=document.getElementById('bp-body');
+    if(data.html) body.innerHTML=data.html;
+  }catch(e){
+    // Fallback to basic info
+    const body=document.getElementById('bp-body');
+    const extra=document.querySelector('.bp-loading');
+    if(extra) extra.remove();
   }
 }
 
-// ── SEARCH ─────────────────────────────────────────────────
-function doSearch() {
-  const q = document.getElementById('si').value.trim();
-  if (!q) return;
-  const keys = Object.keys(DB);
-  const exact   = keys.find(k => k.toLowerCase() === q.toLowerCase());
-  const partial  = keys.find(k => k.toLowerCase().includes(q.toLowerCase()));
-  const reverse  = keys.find(k => q.toLowerCase().includes(k.toLowerCase()));
-  const match = exact || partial || reverse;
-  openC(match || q, match ? DB[match] : { flag:'🌍', r:'r-europe', tag:'Exploring the unknown reaches of the world…' });
-  document.getElementById('si').value = '';
+function closeBattlePopup(){document.getElementById('battle-popup').style.display='none';}
+
+// ══════════════════════════════════════════════
+// OPEN COUNTRY
+// ══════════════════════════════════════════════
+function findInfo(name){
+  if(DB[name]) return DB[name];
+  const k=Object.keys(DB).find(k=>name.toLowerCase().includes(k.toLowerCase())||k.toLowerCase().includes(name.toLowerCase()));
+  return k?DB[k]:null;
 }
 
-// ── REGION FILTER ──────────────────────────────────────────
-function filt(region, btn) {
-  document.querySelectorAll('.rb').forEach(b => b.classList.remove('act'));
+function openC(name,info){
+  cur=name; loaded={};
+  document.getElementById('pflag').textContent=info?info.flag:'🌍';
+  document.getElementById('pname').textContent=name;
+  document.getElementById('ptag').textContent=info?info.tag:'';
+  document.querySelectorAll('[data-name]').forEach(p=>p.classList.remove('act'));
+  document.querySelectorAll(`[data-name="${name}"]`).forEach(p=>p.classList.add('act'));
+  const panel=document.getElementById('panel');
+  panel.classList.add('vis');
+  // Reset tabs
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('act'));
+  document.querySelectorAll('.tc').forEach(t=>t.classList.remove('act'));
+  document.querySelector('[data-tab="overview"]').classList.add('act');
+  document.getElementById('tc-overview').classList.add('act');
+  ['overview','antiquity','history','politics','leaders','culture','religion','celebrities','geopolitics','wars','crises','resources'].forEach(t=>{
+    document.getElementById('cv-'+t).innerHTML='';
+    const l=document.getElementById('l-'+t);
+    if(l) l.style.display=(t==='overview')?'flex':'none';
+  });
+  loadTab('overview');
+  showBattleMarkers(name);
+  setTimeout(()=>panel.scrollIntoView({behavior:'smooth',block:'start'}),100);
+}
+
+function closeP(){
+  document.getElementById('panel').classList.remove('vis');
+  document.querySelectorAll('[data-name]').forEach(p=>p.classList.remove('act'));
+  document.getElementById('battle-layer').innerHTML='';
+  cur=null;
+}
+
+function sw(tab,btn){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('act'));
+  document.querySelectorAll('.tc').forEach(t=>t.classList.remove('act'));
   btn.classList.add('act');
-  document.querySelectorAll('.cp').forEach(p => {
-    p.style.opacity = (region === 'all' || p.classList.contains(region)) ? '1' : '0.14';
+  document.getElementById('tc-'+tab).classList.add('act');
+  if(cur&&!loaded[tab]) loadTab(tab);
+}
+
+// ══════════════════════════════════════════════
+// LOAD TAB
+// ══════════════════════════════════════════════
+async function loadTab(tab){
+  tab=tab||'overview';
+  if(loaded[tab]||!cur) return;
+  loaded[tab]=true;
+  const lEl=document.getElementById('l-'+tab);
+  const cEl=document.getElementById('cv-'+tab);
+  if(lEl){lEl.style.display='flex';cEl.innerHTML='';}
+  try{
+    const resp=await fetch(API_BASE+'/api/generate',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({country:cur,tab})
+    });
+    if(resp.status===429) throw new Error('rate_limit');
+    if(!resp.ok){const e=await resp.json().catch(()=>({}));throw new Error(e.error||'Error '+resp.status);}
+    const data=await resp.json();
+    if(lEl) lEl.style.display='none';
+    cEl.innerHTML=data.html||'<p class="ct">No content returned.</p>';
+    if(data.cached) cEl.insertAdjacentHTML('afterbegin','<div style="font-family:\'Cinzel\',serif;font-size:.6rem;color:var(--inkf);margin-bottom:.7rem;opacity:.55">⚡ Cached</div>');
+  }catch(err){
+    if(lEl) lEl.style.display='none';
+    const isRate=err.message==='rate_limit';
+    cEl.innerHTML=`<div class="err-box"><span class="err-lbl">⚠ ${isRate?'Too Many Requests':'Could Not Load'}</span><p class="ct">${isRate?'Please wait a moment.':'Could not load. <button class="btn" onclick="loaded[\''+tab+'\']=false;loadTab(\''+tab+'\')">↻ Retry</button>'}</p></div>`;
+    loaded[tab]=false;
+  }
+}
+
+// ══════════════════════════════════════════════
+// SEARCH
+// ══════════════════════════════════════════════
+function doSearch(){
+  const q=document.getElementById('si').value.trim(); if(!q)return;
+  const keys=Object.keys(DB);
+  const match=keys.find(k=>k.toLowerCase()===q.toLowerCase())
+    ||keys.find(k=>k.toLowerCase().includes(q.toLowerCase()))
+    ||keys.find(k=>q.toLowerCase().includes(k.toLowerCase()));
+  openC(match||q,match?DB[match]:{flag:'🌍',r:'r-europe',tag:'Exploring the unknown…'});
+  document.getElementById('si').value='';
+}
+
+function filt(region,btn){
+  document.querySelectorAll('.rb').forEach(b=>b.classList.remove('act'));
+  btn.classList.add('act');
+  document.querySelectorAll('.cp').forEach(p=>{
+    p.style.opacity=(region==='all'||p.classList.contains(region))?'1':'0.13';
   });
 }
 
-// ── ISO MAP ────────────────────────────────────────────────
-function isoMap() {
-  return {
-    4:"Afghanistan",8:"Albania",12:"Algeria",24:"Angola",32:"Argentina",36:"Australia",
-    40:"Austria",50:"Bangladesh",56:"Belgium",68:"Bolivia",76:"Brazil",100:"Bulgaria",
-    104:"Myanmar",116:"Cambodia",120:"Cameroon",124:"Canada",144:"Sri Lanka",152:"Chile",
-    156:"China",170:"Colombia",178:"Republic of the Congo",180:"Congo",191:"Croatia",
-    192:"Cuba",196:"Cyprus",203:"Czech Republic",208:"Denmark",214:"Dominican Republic",
-    218:"Ecuador",818:"Egypt",222:"El Salvador",231:"Ethiopia",246:"Finland",250:"France",
-    288:"Ghana",276:"Germany",300:"Greece",320:"Guatemala",332:"Haiti",340:"Honduras",
-    348:"Hungary",356:"India",360:"Indonesia",364:"Iran",368:"Iraq",372:"Ireland",
-    376:"Israel",380:"Italy",388:"Jamaica",392:"Japan",400:"Jordan",398:"Kazakhstan",
-    404:"Kenya",408:"North Korea",410:"South Korea",414:"Kuwait",418:"Laos",422:"Lebanon",
-    434:"Libya",450:"Madagascar",466:"Mali",484:"Mexico",496:"Mongolia",504:"Morocco",
-    508:"Mozambique",516:"Namibia",524:"Nepal",528:"Netherlands",554:"New Zealand",
-    558:"Nicaragua",566:"Nigeria",578:"Norway",586:"Pakistan",604:"Peru",608:"Philippines",
-    616:"Poland",620:"Portugal",634:"Qatar",642:"Romania",643:"Russia",646:"Rwanda",
-    682:"Saudi Arabia",686:"Senegal",706:"Somalia",710:"South Africa",724:"Spain",
-    729:"Sudan",728:"South Sudan",752:"Sweden",756:"Switzerland",760:"Syria",764:"Thailand",
-    788:"Tunisia",792:"Turkey",800:"Uganda",804:"Ukraine",784:"United Arab Emirates",
-    826:"United Kingdom",840:"United States",858:"Uruguay",862:"Venezuela",704:"Vietnam",
-    887:"Yemen",894:"Zambia",716:"Zimbabwe",275:"Palestine",740:"Suriname",768:"Togo",
-    834:"Tanzania",454:"Malawi",458:"Malaysia",591:"Panama",600:"Paraguay",630:"Puerto Rico",
-    694:"Sierra Leone",780:"Trinidad and Tobago",
-  };
+// ══════════════════════════════════════════════
+// ISO MAP
+// ══════════════════════════════════════════════
+function isoMap(){return{4:"Afghanistan",8:"Albania",12:"Algeria",24:"Angola",32:"Argentina",36:"Australia",40:"Austria",50:"Bangladesh",56:"Belgium",68:"Bolivia",76:"Brazil",100:"Bulgaria",104:"Myanmar",116:"Cambodia",120:"Cameroon",124:"Canada",144:"Sri Lanka",152:"Chile",156:"China",170:"Colombia",178:"Republic of the Congo",180:"Congo",191:"Croatia",192:"Cuba",196:"Cyprus",203:"Czech Republic",208:"Denmark",214:"Dominican Republic",218:"Ecuador",818:"Egypt",222:"El Salvador",231:"Ethiopia",246:"Finland",250:"France",288:"Ghana",276:"Germany",300:"Greece",320:"Guatemala",332:"Haiti",340:"Honduras",348:"Hungary",356:"India",360:"Indonesia",364:"Iran",368:"Iraq",372:"Ireland",376:"Israel",380:"Italy",388:"Jamaica",392:"Japan",400:"Jordan",398:"Kazakhstan",404:"Kenya",408:"North Korea",410:"South Korea",414:"Kuwait",418:"Laos",422:"Lebanon",434:"Libya",450:"Madagascar",466:"Mali",484:"Mexico",496:"Mongolia",504:"Morocco",508:"Mozambique",516:"Namibia",524:"Nepal",528:"Netherlands",554:"New Zealand",558:"Nicaragua",566:"Nigeria",578:"Norway",586:"Pakistan",604:"Peru",608:"Philippines",616:"Poland",620:"Portugal",634:"Qatar",642:"Romania",643:"Russia",646:"Rwanda",682:"Saudi Arabia",686:"Senegal",706:"Somalia",710:"South Africa",724:"Spain",729:"Sudan",728:"South Sudan",752:"Sweden",756:"Switzerland",760:"Syria",764:"Thailand",788:"Tunisia",792:"Turkey",800:"Uganda",804:"Ukraine",784:"United Arab Emirates",826:"United Kingdom",840:"United States",858:"Uruguay",862:"Venezuela",704:"Vietnam",887:"Yemen",894:"Zambia",716:"Zimbabwe",275:"Palestine",740:"Suriname",768:"Togo",834:"Tanzania",454:"Malawi",458:"Malaysia",591:"Panama",600:"Paraguay",630:"Puerto Rico",694:"Sierra Leone",780:"Trinidad and Tobago",887:"Yemen",894:"Zambia"};}
+
+// ══════════════════════════════════════════════
+// GAMES ENGINE
+// ══════════════════════════════════════════════
+let gameType='', gameScore=0, gameQ=0, gameTot=10, gameData=[];
+
+const COUNTRIES_GAME=Object.entries(DB).filter(([k,v])=>v.flag&&v.flag.length>1&&!['⚜','🦅','☪','🐎','🌞','🦙','🐘','𓂀','🦁'].includes(v.flag)&&v.capital);
+
+function startGame(type){
+  gameType=type; gameScore=0; gameQ=0;
+  document.getElementById('games-menu').style.display='none';
+  document.getElementById('game-arena').style.display='block';
+  const titles={flags:'🏳 Flag Master',capitals:'🏛 Capital Cities',shapes:'🗺 Country Shapes',celebrities:'⭐ Famous Faces',history:'⚔ History Trivia',population:'👥 Bigger or Smaller?',place:'📍 Place It!',timeline:'📅 History Timeline'};
+  document.getElementById('arena-title').textContent=titles[type]||type;
+  updateScore();
+  buildGameData(type);
+  renderQuestion();
 }
 
-// ── SCROLL ─────────────────────────────────────────────────
-window.addEventListener('scroll', () => {
-  document.getElementById('stop').classList.toggle('vis', window.scrollY > 400);
+function backToGames(){
+  document.getElementById('game-arena').style.display='none';
+  document.getElementById('games-menu').style.display='block';
+}
+
+function buildGameData(type){
+  const shuffled=[...COUNTRIES_GAME].sort(()=>Math.random()-.5);
+  gameData=shuffled.slice(0,gameTot);
+}
+
+function updateScore(){
+  document.getElementById('arena-score').textContent=`Score: ${gameScore} / ${gameQ}`;
+  const fill=document.getElementById('prog-fill');
+  if(fill) fill.style.width=(gameQ/gameTot*100)+'%';
+}
+
+function renderQuestion(){
+  const body=document.getElementById('arena-body');
+  if(gameQ>=gameTot){
+    showFinalScore(body); return;
+  }
+  const item=gameData[gameQ];
+  const [name,info]=item;
+  const qNum=gameQ+1;
+
+  let qHTML='';
+  if(gameType==='flags'){
+    const opts=getOptions(name,4);
+    qHTML=`
+      <div class="progress-bar"><div class="db-fill" id="prog-fill" style="width:${(gameQ/gameTot*100)}%"></div></div>
+      <div class="q-card">
+        <div class="q-flag">${info.flag}</div>
+        <div class="q-text">Question ${qNum}/${gameTot} — Which country does this flag belong to?</div>
+        <div class="options">${opts.map(o=>`<button class="opt" onclick="answer(this,'${o}','${name}')">${o}</button>`).join('')}</div>
+        <div class="q-result" id="qres"></div>
+        <button class="next-btn" id="nextbtn" onclick="nextQ()">Next →</button>
+      </div>`;
+  } else if(gameType==='capitals'){
+    const opts=getOptions(name,4,'capitals');
+    qHTML=`
+      <div class="progress-bar"><div class="db-fill" id="prog-fill" style="width:${(gameQ/gameTot*100)}%"></div></div>
+      <div class="q-card">
+        <div class="q-text">Question ${qNum}/${gameTot} — What is the capital of <strong>${name}</strong>? ${info.flag}</div>
+        <div class="options">${opts.map(o=>`<button class="opt" onclick="answerCapital(this,'${o}','${info.capital}')">${o}</button>`).join('')}</div>
+        <div class="q-result" id="qres"></div>
+        <button class="next-btn" id="nextbtn" onclick="nextQ()">Next →</button>
+      </div>`;
+  } else if(gameType==='shapes'){
+    const shapes={France:'🔷',Germany:'🔸',Italy:'👢',Chile:'🌶',Japan:'🗾',Australia:'🦘',USA:'🦅',Brazil:'🌿',India:'💎',Norway:'🪓'};
+    const shape=shapes[name]||'⬛';
+    const opts=getOptions(name,4);
+    qHTML=`
+      <div class="progress-bar"><div class="db-fill" id="prog-fill" style="width:${(gameQ/gameTot*100)}%"></div></div>
+      <div class="q-card">
+        <div class="q-shape">${shape}</div>
+        <div class="q-text">Question ${qNum}/${gameTot} — Which country has this shape?</div>
+        <div class="options">${opts.map(o=>`<button class="opt" onclick="answer(this,'${o}','${name}')">${o}</button>`).join('')}</div>
+        <div class="q-result" id="qres"></div>
+        <button class="next-btn" id="nextbtn" onclick="nextQ()">Next →</button>
+      </div>`;
+  } else if(gameType==='history'){
+    const hqs=getHistoryQuestions();
+    const hq=hqs[gameQ%hqs.length];
+    qHTML=`
+      <div class="progress-bar"><div class="db-fill" id="prog-fill" style="width:${(gameQ/gameTot*100)}%"></div></div>
+      <div class="q-card">
+        <div class="q-text">Question ${qNum}/${gameTot} — ${hq.q}</div>
+        <div class="options">${hq.opts.map((o,i)=>`<button class="opt" onclick="answerHistory(this,${i},${hq.correct},'${hq.explanation.replace(/'/g,"&#39;")}')">${o}</button>`).join('')}</div>
+        <div class="q-result" id="qres"></div>
+        <button class="next-btn" id="nextbtn" onclick="nextQ()">Next →</button>
+      </div>`;
+  } else if(gameType==='population'){
+    const pair=getPair();
+    qHTML=`
+      <div class="progress-bar"><div class="db-fill" id="prog-fill" style="width:${(gameQ/gameTot*100)}%"></div></div>
+      <div class="q-card">
+        <div class="q-text">Question ${qNum}/${gameTot} — Which country has a LARGER population?</div>
+        <div class="options" style="grid-template-columns:1fr 1fr">
+          <button class="opt" style="padding:1.2rem;font-size:.95rem" onclick="answerPop(this,'a',${pair.aWins})">${pair.a[0]} ${pair.a[1].flag}</button>
+          <button class="opt" style="padding:1.2rem;font-size:.95rem" onclick="answerPop(this,'b',${pair.aWins})">${pair.b[0]} ${pair.b[1].flag}</button>
+        </div>
+        <div class="q-result" id="qres"></div>
+        <button class="next-btn" id="nextbtn" onclick="nextQ()">Next →</button>
+      </div>`;
+  } else if(gameType==='timeline'){
+    const tevents=getTimelineEvents();
+    qHTML=`
+      <div class="progress-bar"><div class="db-fill" id="prog-fill" style="width:${(gameQ/gameTot*100)}%"></div></div>
+      <div class="q-card">
+        <div class="q-text">Question ${qNum}/${gameTot} — Which event happened FIRST?</div>
+        <div class="options">${tevents.map((e,i)=>`<button class="opt" onclick="answerTimeline(this,${i},${tevents.findIndex(x=>x.year===Math.min(...tevents.map(e=>e.year)))},'${tevents.map(e=>e.year).join(',')}')">${e.event} <small style="opacity:.6;display:block">(century)</small></button>`).join('')}</div>
+        <div class="q-result" id="qres"></div>
+        <button class="next-btn" id="nextbtn" onclick="nextQ()">Next →</button>
+      </div>`;
+  } else if(gameType==='celebrities'){
+    const cqs=getCelebrityQuestions();
+    const cq=cqs[gameQ%cqs.length];
+    qHTML=`
+      <div class="progress-bar"><div class="db-fill" id="prog-fill" style="width:${(gameQ/gameTot*100)}%"></div></div>
+      <div class="q-card">
+        <div class="q-text">Question ${qNum}/${gameTot} — ${cq.q}</div>
+        <div class="options">${cq.opts.map((o,i)=>`<button class="opt" onclick="answerHistory(this,${i},${cq.correct},'${cq.exp.replace(/'/g,"&#39;")}')">${o}</button>`).join('')}</div>
+        <div class="q-result" id="qres"></div>
+        <button class="next-btn" id="nextbtn" onclick="nextQ()">Next →</button>
+      </div>`;
+  } else {
+    // Default fallback
+    const opts=getOptions(name,4);
+    qHTML=`
+      <div class="progress-bar"><div class="db-fill" id="prog-fill" style="width:${(gameQ/gameTot*100)}%"></div></div>
+      <div class="q-card">
+        <div class="q-flag">${info.flag}</div>
+        <div class="q-text">Question ${qNum}/${gameTot} — Identify this country!</div>
+        <div class="options">${opts.map(o=>`<button class="opt" onclick="answer(this,'${o}','${name}')">${o}</button>`).join('')}</div>
+        <div class="q-result" id="qres"></div>
+        <button class="next-btn" id="nextbtn" onclick="nextQ()">Next →</button>
+      </div>`;
+  }
+
+  body.innerHTML=qHTML;
+}
+
+function getOptions(correct,n,type='name'){
+  const all=COUNTRIES_GAME.map(([k,v])=>type==='capitals'?v.capital:k).filter(Boolean);
+  const opts=[correct==='capitals'?DB[correct]?.capital:correct];
+  while(opts.length<n){
+    const r=all[Math.floor(Math.random()*all.length)];
+    if(!opts.includes(r)) opts.push(r);
+  }
+  return opts.sort(()=>Math.random()-.5);
+}
+
+function answer(btn,chosen,correct){
+  document.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+  const isCorrect=chosen===correct;
+  btn.classList.add(isCorrect?'correct':'wrong');
+  if(!isCorrect) document.querySelectorAll('.opt').forEach(b=>{if(b.textContent===correct) b.classList.add('correct');});
+  const res=document.getElementById('qres');
+  res.className='q-result show '+(isCorrect?'ok':'fail');
+  res.textContent=isCorrect?'✓ Correct!':'✗ The answer was '+correct;
+  if(isCorrect) gameScore++;
+  updateScore();
+  document.getElementById('nextbtn').classList.add('show');
+}
+
+function answerCapital(btn,chosen,correct){answer(btn,chosen,correct);}
+function answerHistory(btn,idx,correct,explanation){
+  document.querySelectorAll('.opt').forEach((b,i)=>{b.disabled=true;if(i===correct)b.classList.add('correct');});
+  const isCorrect=idx===correct;
+  if(!isCorrect) btn.classList.add('wrong');
+  const res=document.getElementById('qres');
+  res.className='q-result show '+(isCorrect?'ok':'fail');
+  res.textContent=(isCorrect?'✓ Correct! ':'✗ Wrong. ')+explanation;
+  if(isCorrect) gameScore++;
+  updateScore();
+  document.getElementById('nextbtn').classList.add('show');
+}
+function answerPop(btn,choice,aWins){
+  document.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+  const isCorrect=(choice==='a')===aWins;
+  btn.classList.add(isCorrect?'correct':'wrong');
+  const res=document.getElementById('qres');
+  res.className='q-result show '+(isCorrect?'ok':'fail');
+  res.textContent=isCorrect?'✓ Correct!':'✗ Wrong!';
+  if(isCorrect) gameScore++;
+  updateScore();
+  document.getElementById('nextbtn').classList.add('show');
+}
+function answerTimeline(btn,idx,correct,years){
+  document.querySelectorAll('.opt').forEach((b,i)=>{b.disabled=true;if(i===correct)b.classList.add('correct');});
+  const isCorrect=idx===correct;
+  if(!isCorrect) btn.classList.add('wrong');
+  const yrs=years.split(',');
+  const res=document.getElementById('qres');
+  res.className='q-result show '+(isCorrect?'ok':'fail');
+  res.textContent=(isCorrect?'✓ Correct! ':'✗ Wrong. ')+'Order: '+yrs.map((y,i)=>y).join(' → ');
+  if(isCorrect) gameScore++;
+  updateScore();
+  document.getElementById('nextbtn').classList.add('show');
+}
+
+function nextQ(){gameQ++;renderQuestion();}
+
+function showFinalScore(body){
+  const pct=Math.round(gameScore/gameTot*100);
+  const msgs={90:'🏆 Outstanding! You are a true geographer!',70:'🎖 Excellent knowledge!',50:'📚 Good effort — keep exploring!',30:'🌍 The world is vast — keep learning!',0:'✈ Every explorer starts somewhere!'};
+  const msg=Object.entries(msgs).reverse().find(([t])=>pct>=parseInt(t))[1];
+  body.innerHTML=`<div class="score-panel">
+    <div class="q-text" style="font-size:1.1rem">Game complete!</div>
+    <div class="score-big">${gameScore} / ${gameTot}</div>
+    <div class="score-msg">${msg}</div>
+    <button class="btn" onclick="startGame('${gameType}')" style="margin:.5rem">↻ Play Again</button>
+    <button class="btn" onclick="backToGames()" style="margin:.5rem">← All Games</button>
+  </div>`;
+}
+
+function getPair(){
+  const pops={'China':1400000000,'India':1400000000,'United States':335000000,'Indonesia':275000000,'Pakistan':230000000,'Brazil':215000000,'Nigeria':220000000,'Bangladesh':170000000,'Russia':144000000,'Ethiopia':125000000,'Mexico':130000000,'Japan':125000000,'Philippines':115000000,'Germany':84000000,'France':68000000,'United Kingdom':67000000,'Tanzania':65000000,'South Africa':60000000,'Argentina':46000000,'Canada':38000000,'Australia':26000000,'North Korea':26000000,'Saudi Arabia':35000000,'Malaysia':33000000,'Peru':33000000,'Venezuela':29000000,'Chile':19000000,'Netherlands':17000000,'Cambodia':17000000,'Belgium':12000000,'Cuba':11000000,'Portugal':10000000,'Sweden':10000000,'Hungary':10000000,'Switzerland':8700000,'Israel':9000000,'Singapore':6000000,'Norway':5400000,'New Zealand':5000000,'Ireland':5000000,'Iceland':370000};
+  const keys=Object.keys(pops).filter(k=>DB[k]);
+  const a=keys[Math.floor(Math.random()*keys.length)];
+  let b=keys[Math.floor(Math.random()*keys.length)];
+  while(b===a) b=keys[Math.floor(Math.random()*keys.length)];
+  return{a:[a,DB[a]],b:[b,DB[b]],aWins:pops[a]>pops[b]};
+}
+
+function getHistoryQuestions(){return[
+  {q:"In what year did World War II end?",opts:["1943","1944","1945","1946"],correct:2,explanation:"WWII ended in 1945 — V-E Day (May 8) in Europe, V-J Day (Sep 2) in the Pacific."},
+  {q:"Which empire was known as 'the empire on which the sun never sets'?",opts:["Roman Empire","British Empire","Spanish Empire","Ottoman Empire"],correct:1,explanation:"The British Empire at its peak covered 24% of the world's land surface."},
+  {q:"The French Revolution began in which year?",opts:["1776","1789","1799","1804"],correct:1,explanation:"The French Revolution began in 1789 with the storming of the Bastille on July 14."},
+  {q:"Which country dropped atomic bombs on Japan in 1945?",opts:["United Kingdom","Soviet Union","United States","France"],correct:2,explanation:"The USA dropped bombs on Hiroshima (Aug 6) and Nagasaki (Aug 9) 1945."},
+  {q:"The Berlin Wall fell in which year?",opts:["1987","1988","1989","1990"],correct:2,explanation:"The Berlin Wall fell on November 9, 1989, ending the division of Germany."},
+  {q:"Who was the first Emperor of China?",opts:["Kublai Khan","Qin Shi Huang","Emperor Wu","Sun Yat-sen"],correct:1,explanation:"Qin Shi Huang unified China in 221 BC and became its first emperor."},
+  {q:"The Rwandan genocide occurred in which year?",opts:["1992","1993","1994","1995"],correct:2,explanation:"800,000 Tutsi and moderate Hutu were killed in 100 days in 1994."},
+  {q:"Which ancient wonder was located in Egypt?",opts:["Hanging Gardens","Colossus of Rhodes","Great Pyramid of Giza","Temple of Artemis"],correct:2,explanation:"The Great Pyramid of Giza is the only ancient wonder still standing today."},
+  {q:"The Soviet Union officially dissolved in which year?",opts:["1989","1990","1991","1992"],correct:2,explanation:"The USSR was formally dissolved on December 25, 1991."},
+  {q:"Which country invented paper?",opts:["Egypt","China","India","Mesopotamia"],correct:1,explanation:"Paper was invented in China around 105 AD by Cai Lun during the Han Dynasty."},
+  {q:"Napoleon was exiled to which island after Waterloo?",opts:["Elba","Corsica","Malta","Saint Helena"],correct:3,explanation:"Napoleon was exiled to Saint Helena in the South Atlantic, where he died in 1821."},
+  {q:"The Apartheid regime in South Africa officially ended in which year?",opts:["1990","1991","1993","1994"],correct:3,explanation:"South Africa's first democratic elections were held in April 1994 with Mandela's victory."},
+  {q:"Which civilisation built Machu Picchu?",opts:["Aztec","Maya","Inca","Olmec"],correct:2,explanation:"Machu Picchu was built by the Inca Empire around 1450 CE in present-day Peru."},
+  {q:"The Siege of Leningrad during WWII lasted approximately how long?",opts:["6 months","18 months","872 days","3 years"],correct:2,explanation:"The Siege of Leningrad lasted 872 days (1941–1944), killing over 1 million civilians."},
+  {q:"Which country was the first to grant women the right to vote?",opts:["United States","United Kingdom","New Zealand","France"],correct:2,explanation:"New Zealand was the first self-governing country to grant women suffrage, in 1893."},
+];}
+
+function getCelebrityQuestions(){return[
+  {q:"Albert Einstein was born in which country?",opts:["Austria","Switzerland","Germany","Netherlands"],correct:2,exp:"Einstein was born in Ulm, Germany in 1879, though he later became Swiss and American."},
+  {q:"Pablo Picasso was from which country?",opts:["France","Italy","Spain","Portugal"],correct:2,exp:"Picasso was born in Málaga, Spain in 1881, though he spent most of his life in France."},
+  {q:"Nelson Mandela was the president of which country?",opts:["Nigeria","Kenya","South Africa","Zimbabwe"],correct:2,exp:"Mandela was South Africa's first democratically elected president (1994–1999)."},
+  {q:"Frida Kahlo was from which country?",opts:["Colombia","Brazil","Argentina","Mexico"],correct:3,exp:"Frida Kahlo was born in Coyoacán, Mexico City in 1907."},
+  {q:"Mahatma Gandhi led independence movements in which country?",opts:["Pakistan","Bangladesh","India","Sri Lanka"],correct:2,exp:"Gandhi led India's independence movement against British rule through nonviolent resistance."},
+  {q:"Cleopatra ruled which ancient kingdom?",opts:["Rome","Carthage","Egypt","Persia"],correct:2,exp:"Cleopatra VII was the last active ruler of the Ptolemaic Kingdom of Egypt (51–30 BC)."},
+  {q:"Leonardo da Vinci was born in which country?",opts:["France","Spain","Greece","Italy"],correct:3,exp:"Da Vinci was born in Vinci, Tuscany (Italy) in 1452."},
+  {q:"Which country produced the philosopher Confucius?",opts:["Japan","Korea","China","Vietnam"],correct:2,exp:"Confucius (551–479 BC) was born in the State of Lu, now Shandong province, China."},
+  {q:"Bob Marley was from which country?",opts:["Trinidad","Cuba","Haiti","Jamaica"],correct:3,exp:"Bob Marley was born in Nine Mile, Saint Ann Parish, Jamaica in 1945."},
+  {q:"Marie Curie was originally from which country?",opts:["France","Russia","Germany","Poland"],correct:3,exp:"Marie Curie was born Maria Skłodowska in Warsaw, Poland in 1867."},
+];}
+
+function getTimelineEvents(){
+  const events=[
+    {event:"Fall of Rome (Western)",year:476},{event:"Black Death in Europe",year:1347},
+    {event:"Columbus reaches Americas",year:1492},{event:"French Revolution begins",year:1789},
+    {event:"American Independence",year:1776},{event:"Napoleon defeated at Waterloo",year:1815},
+    {event:"WWI begins",year:1914},{event:"WWII ends",year:1945},
+    {event:"Berlin Wall falls",year:1989},{event:"Moon landing",year:1969},
+    {event:"Mongol Empire founded",year:1206},{event:"Ottoman Empire founded",year:1299},
+    {event:"Battle of Hastings",year:1066},{event:"Magna Carta signed",year:1215},
+    {event:"Hiroshima bombing",year:1945},{event:"Russian Revolution",year:1917},
+  ];
+  const shuffled=events.sort(()=>Math.random()-.5).slice(0,4);
+  return shuffled;
+}
+
+// ══════════════════════════════════════════════
+// SCROLL & MISC
+// ══════════════════════════════════════════════
+window.addEventListener('scroll',()=>{document.getElementById('stop').classList.toggle('vis',window.scrollY>400);});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){if(cur)closeP(); closeBattlePopup();}
 });
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && cur) closeP(); });
 
 loadMap();
 </script>
 </body>
 </html>
-{
-  "version": 2,
-  "functions": {
-    "api/generate.js": {
-      "maxDuration": 30
-    }
-  },
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "src": "/(.*)", "dest": "/public/$1" }
-  ]
-}
