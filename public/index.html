@@ -704,3 +704,15 @@ loadMap();
 </script>
 </body>
 </html>
+{
+  "version": 2,
+  "functions": {
+    "api/generate.js": {
+      "maxDuration": 30
+    }
+  },
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/(.*)", "dest": "/public/$1" }
+  ]
+}
