@@ -56,7 +56,7 @@ Be EXTREMELY detailed. For major countries write 1500+ words of HTML. Include AL
 // ─────────────────────────────────────────
 // PROMPTS
 // ─────────────────────────────────────────
-function getPrompt(tab, country, isIsland, isAncient) {
+function getPrompt(tab, country, isIsland, isAncient, req={}) {
   const island = isIsland ? `Note: ${country} is an island/archipelago — emphasise maritime history, isolation, indigenous peoples, colonial encounter, and unique cultural identity. ` : '';
   const ancient = isAncient ? `Note: ${country} is an ancient empire/civilisation — cover its full rise, peak, decline and legacy in great detail. ` : '';
   const base = island + ancient;
@@ -99,6 +99,12 @@ NO CENSORSHIP. Cover: 1) Genocides — every documented case with perpetrators, 
 Include: 1) 10-12 REAL verifiable books (.books) — history, politics, culture, memoirs, journalism — each with Amazon affiliate link using: https://www.amazon.com/s?tag=atlasmundi-20&k=BOOK+TITLE+AUTHOR (replace spaces with +). 2) 5-8 real documentaries. 3) Online resources (.links) with real URLs: Wikipedia, BBC Country Profile, CIA World Factbook, Freedom House, HRW, Amnesty, UN, Transparency International, RSF. 4) Academic resources. 5) Museums with relevant collections. 6) Language learning resources. 7) Reliable news sources covering this country. Always use the Amazon affiliate tag: atlasmundi-20`
   };
 
+  // Special: battle detail
+  if(tab === 'battle' && req && req.battleName) {
+    return `Write an ULTRA-DETAILED military analysis of the ${req.battleName} (${req.battleDate}).
+${req.battleDesc}
+Include as HTML: 1) Strategic context — why this battle mattered. 2) Forces involved — numbers, commanders, equipment. 3) Tactical overview — how the battle unfolded, key moments, turning points. 4) Day-by-day or phase-by-phase account. 5) Casualties and human cost. 6) Aftermath and historical consequences. 7) One fascinating anecdote (.ano). Use .ct paragraphs, .tl-wrap timeline for phases, .war-stat for numbers.`;
+  }
   return prompts[tab] || `Write comprehensive information about ${tab} for ${country}.`;
 }
 
@@ -133,7 +139,7 @@ export default async function handler(req, res) {
     return res.status(429).json({ error: 'Too many requests. Please wait a moment before exploring more.' });
   }
 
-  const { country, tab } = req.body || {};
+  const { country, tab, battleName, battleDate, battleDesc } = req.body || {};
 
   if (!country || !tab) {
     return res.status(400).json({ error: 'Missing country or tab parameter' });
@@ -166,7 +172,7 @@ export default async function handler(req, res) {
   const isIsland = islandNames.includes(safeCountry);
   const isAncient = ancientNames.includes(safeCountry);
 
-  const prompt = getPrompt(tab, safeCountry, isIsland, isAncient);
+  const prompt = getPrompt(tab, safeCountry, isIsland, isAncient, req.body);
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
