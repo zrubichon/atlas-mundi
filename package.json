@@ -1,0 +1,7 @@
+{
+  "name": "atlas-mundi",
+  "version": "3.0.0",
+  "description": "Atlas Mundi — The Explorer's World Encyclopaedia",
+  "private": true,
+  "type": "module"
+}
