@@ -105,7 +105,59 @@ Include: 1) 10-12 REAL verifiable books (.books) — history, politics, culture,
 ${req.battleDesc}
 Include as HTML: 1) Strategic context — why this battle mattered. 2) Forces involved — numbers, commanders, equipment. 3) Tactical overview — how the battle unfolded, key moments, turning points. 4) Day-by-day or phase-by-phase account. 5) Casualties and human cost. 6) Aftermath and historical consequences. 7) One fascinating anecdote (.ano). Use .ct paragraphs, .tl-wrap timeline for phases, .war-stat for numbers.`;
   }
-  return prompts[tab] || `Write comprehensive information about ${tab} for ${country}.`;
+
+  // Language instruction
+  const langInstructions = {
+    fr: 'Réponds entièrement en français.',
+    es: 'Responde completamente en español.',
+    de: 'Antworte vollständig auf Deutsch.',
+    ar: 'أجب باللغة العربية الفصحى.',
+    zh: '请用中文回答。',
+    pt: 'Responda completamente em português.',
+    ja: '日本語で答えてください。',
+    en: ''
+  };
+  const langNote = langInstructions[req.lang||'en'] || '';
+
+  // Special tabs
+  if(tab === 'battle') {
+    return `${langNote} Write an ULTRA-DETAILED military analysis of the ${req.battleName||country} (${req.battleDate||''}). Context: ${req.battleDesc||''}. Include as HTML: 1) Strategic context. 2) Forces, numbers, commanders. 3) Phase-by-phase account with .tl-wrap timeline. 4) Casualties. 5) Historical consequences. 6) One .ano anecdote. Use .ct .war-stat .sh.`;
+  }
+  if(tab === 'monuments') {
+    return `${langNote} Write about the MOST ICONIC MONUMENTS, BUILDINGS & PLACES of ${country}. For each use .bld-c cards in a .bld-g grid. Include: palace, cathedral, fortress, UNESCO sites, ancient ruins, modern landmarks. For each: emoji icon, name, brief history, why it matters culturally. Also generate a small list of coordinates for a .monument-map with pins (as JSON comment at the end: <!-- PINS: [{"name":"X","emoji":"🏰","top":"40%","left":"50%","desc":"..."}] -->). Include 5-8 monuments. After the grid, add a .books section: 'Architectural & Travel Books' with 3-4 real travel/architecture books about ${country}.`;
+  }
+  if(tab === 'books') {
+    return `${langNote} Write a COMPREHENSIVE BOOKS section for ${country}. Structure it by category using .bk-cat dividers inside a .books container:
+- Prehistory & Antiquity books (2-3)
+- Medieval & Early Modern books (2-3)  
+- Modern History books (2-3)
+- Politics & Society books (2-3)
+- Culture & Art books (2-3)
+- If conflict zone: War & Human Rights books (2-3)
+- Fiction set in ${country} (2-3 novels)
+Each book: .bk with .bk-t (title), .bk-a (author), .bk-d (brief description + Amazon link: <a href="https://www.amazon.com/s?tag=atlasmundi-20&k=TITLE+AUTHOR">Buy →</a>). All books must be REAL and verifiable.`;
+  }
+  if(tab === 'ticker') {
+    return `Generate 12 fascinating, surprising world history or geography facts as a JSON array. Format: {"facts": ["✦ Fact 1 ✦", "✦ Fact 2 ✦", ...]}. Facts should be surprising, educational and engaging. Vary between history, geography, culture and science. Output ONLY the JSON, no other text.`;
+  }
+  if(tab === 'news') {
+    return `${langNote} Generate 3 current (as of 2025) world news stories as a JSON object. Format: {"newsCards": [{"cat":"conflict","catLabel":"⚔ Active Conflict","title":"...","summary":"...","badge":"LIVE","related":"CountryName","date":"Today"}]}. Topics must be real, current geopolitical events. Output ONLY the JSON.`;
+  }
+  if(tab === 'newsdetail') {
+    return `${langNote} Write a COMPREHENSIVE NEWS ANALYSIS article about: "${req.newsTitle||country}". Summary: ${req.newsSummary||''}. Category: ${req.newsCategory||''}. 
+Include as HTML: 1) .sh section 'Background & Context' — historical roots of this issue. 2) .sh section 'Key Players' — who is involved, their interests. 3) .sh section 'Timeline of Events' — recent .tl-wrap of developments. 4) .sh section 'Humanitarian Impact' (if applicable) — real numbers, .crisis box if needed. 5) .sh section 'Geopolitical Implications' — what this means for the region and world. 6) .sh section 'Expert Analysis' — different perspectives. 7) .sh section 'What Happens Next' — scenarios.
+Be factual, balanced, and uncensored. Cite real organisations, real figures.`;
+  }
+  if(tab === 'finance') {
+    return `${langNote} Write a COMPREHENSIVE FINANCE/ECONOMICS ANALYSIS about: "${req.finTitle||country}". ${req.finSummary||''}. Category: ${req.finCat||''}.
+Include as HTML: 1) .sh 'Overview' — clear explanation for students. 2) .sh 'Key Data & Statistics' — .sg stat grid with numbers. 3) .sh 'Historical Context' — how we got here. 4) .sh 'Winners & Losers' — which countries/sectors benefit or suffer. 5) .sh 'Policy Options' — what governments/central banks can do. 6) .sh 'For Students: Key Concepts' — define 3-4 relevant economic terms. 7) .books 'Essential Reading' — 3-4 real economics books. Be educational and accessible.`;
+  }
+  if(tab === 'chat') {
+    return `${langNote} You are Jeanne d'Arc, a historical figure now serving as an AI guide for Atlas Mundi, a world history encyclopaedia. You speak with wisdom, occasional medieval flair, and great knowledge of history, geography, geopolitics and culture. The user is currently looking at: ${country}. Their message: "${req.userMessage||'Hello'}". Reply in 2-4 sentences, staying in character as Jeanne — wise, passionate about justice and history, occasionally dramatic. Keep response SHORT (under 100 words). Output plain text (no HTML), but you may use ⚔ 🏰 🌍 emojis sparingly.`;
+  }
+
+  return (prompts[tab] || `${langNote} Write comprehensive information about ${tab} for ${country}.`) + ` ${langNote}`;
+;
 }
 
 // ─────────────────────────────────────────
@@ -139,7 +191,7 @@ export default async function handler(req, res) {
     return res.status(429).json({ error: 'Too many requests. Please wait a moment before exploring more.' });
   }
 
-  const { country, tab, battleName, battleDate, battleDesc } = req.body || {};
+  const { country, tab, battleName, battleDate, battleDesc, lang, userMessage, newsTitle, newsSummary, newsCategory, finTitle, finSummary, finCat } = req.body || {};
 
   if (!country || !tab) {
     return res.status(400).json({ error: 'Missing country or tab parameter' });
@@ -157,7 +209,7 @@ export default async function handler(req, res) {
   const cached = cache.get(cacheKey);
   if (cached && Date.now() - cached.ts < CACHE_TTL) {
     res.setHeader('X-Cache', 'HIT');
-    return res.status(200).json({ html: cached.html, cached: true });
+    return res.status(200).json({ ...(cached.facts ? {facts:cached.facts} : cached.newsCards ? {newsCards:cached.newsCards} : {html:cached.html}), cached: true });
   }
 
   // Check API key
@@ -173,6 +225,9 @@ export default async function handler(req, res) {
   const isAncient = ancientNames.includes(safeCountry);
 
   const prompt = getPrompt(tab, safeCountry, isIsland, isAncient, req.body);
+  // Handle JSON-only tabs
+  const jsonTabs = ['ticker','news'];
+  const isJsonTab = jsonTabs.includes(tab);
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -199,15 +254,24 @@ export default async function handler(req, res) {
     }
 
     const data = await response.json();
-    const html = data.content.map(b => b.text || '').join('');
+    const rawText = data.content.map(b => b.text || '').join('');
+    let html = rawText;
+    let responseData = { html, cached: false };
+
+    // JSON tabs return structured data
+    if(tab === 'ticker') {
+      try { const parsed = JSON.parse(rawText.replace(/```json|```/g,'').trim()); responseData = { facts: parsed.facts, cached: false }; } catch(e) {}
+    } else if(tab === 'news') {
+      try { const parsed = JSON.parse(rawText.replace(/```json|```/g,'').trim()); responseData = { newsCards: parsed.newsCards, cached: false }; } catch(e) {}
+    }
 
     // Store in cache
-    cache.set(cacheKey, { html, ts: Date.now() });
+    cache.set(cacheKey, { ...responseData, ts: Date.now() });
 
     // Log for monitoring (country + tab only, no personal data)
     console.log(`[Atlas] Generated: ${safeCountry} / ${tab} | Tokens: ${data.usage?.input_tokens}→${data.usage?.output_tokens}`);
 
-    return res.status(200).json({ html, cached: false });
+    return res.status(200).json(responseData);
 
   } catch (err) {
     console.error('Handler error:', err);
