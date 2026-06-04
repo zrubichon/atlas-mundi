@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "outputDirectory": "public",
   "functions": {
     "api/generate.js": {
       "maxDuration": 30
