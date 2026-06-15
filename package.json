@@ -1,7 +1,0 @@
-{
-  "name": "atlas-mundi",
-  "version": "4.0.0",
-  "description": "Atlas Mundi — The Explorer's World Encyclopaedia v4",
-  "private": true,
-  "type": "module"
-}
