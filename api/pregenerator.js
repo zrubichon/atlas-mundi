@@ -1,121 +1,140 @@
-// api/pregenerator.js
-// Call this endpoint to pre-generate all country pages
-// GET /api/pregenerator?secret=VOTRE_SECRET&country=France&tab=overview
-// GET /api/pregenerator?secret=VOTRE_SECRET&batch=europe&start=0
+// api/pregenerator.js — Fixed version
+// Calls generate.js directly instead of via HTTP
+
+const generateHandler = require('./generate.js');
 
 const COUNTRIES_BY_REGION = {
   europe: ["France","Germany","United Kingdom","Italy","Spain","Poland","Netherlands","Belgium","Greece","Portugal","Sweden","Norway","Denmark","Finland","Austria","Switzerland","Czech Republic","Romania","Hungary","Ukraine","Russia","Serbia","Croatia","Bulgaria","Slovakia","Slovenia","Lithuania","Latvia","Estonia","Ireland","Iceland","Kosovo","North Macedonia","Moldova","Belarus","Albania","Bosnia","Montenegro","Luxembourg","Malta","Cyprus","Monaco","Liechtenstein","San Marino","Vatican","Andorra","Georgia"],
-  americas: ["United States","Brazil","Mexico","Argentina","Colombia","Chile","Peru","Venezuela","Ecuador","Bolivia","Paraguay","Uruguay","Cuba","Haiti","Dominican Republic","Guatemala","Honduras","El Salvador","Nicaragua","Costa Rica","Panama","Jamaica","Trinidad and Tobago","Guyana","Suriname","Barbados","Bahamas","Saint Lucia","Grenada","Saint Vincent","Antigua and Barbuda","Saint Kitts and Nevis","Canada","Belize","French Guiana","Puerto Rico","Falkland Islands"],
-  africa: ["Nigeria","Ethiopia","Egypt","Tanzania","Kenya","South Africa","Uganda","Sudan","Algeria","Morocco","Ghana","Mozambique","Madagascar","Cameroon","Angola","Zimbabwe","Mali","Burkina Faso","Malawi","Zambia","Senegal","Somalia","Rwanda","Chad","Guinea","South Sudan","Benin","Tunisia","Libya","Sierra Leone","Togo","Eritrea","Central African Republic","Liberia","Republic of the Congo","Congo","Mauritania","Gabon","Namibia","Botswana","Lesotho","Gambia","Guinea-Bissau","Equatorial Guinea","Djibouti","Eswatini","Comoros","Cape Verde","Mauritius","Sao Tome and Principe","Burundi","Niger","Côte d'Ivoire","Western Sahara"],
-  asia: ["China","India","Japan","South Korea","Indonesia","Pakistan","Bangladesh","Vietnam","Philippines","Thailand","Myanmar","Malaysia","North Korea","Sri Lanka","Kazakhstan","Uzbekistan","Afghanistan","Nepal","Tajikistan","Kyrgyzstan","Turkmenistan","Mongolia","Laos","Cambodia","Singapore","Brunei","Bhutan","Maldives","Timor-Leste","Taiwan","Hong Kong"],
-  mena: ["Saudi Arabia","Iran","Turkey","Iraq","Syria","UAE","Israel","Jordan","Lebanon","Palestine","Yemen","Oman","Qatar","Kuwait","Bahrain","Egypt","Libya","Tunisia","Algeria","Morocco"],
-  oceania: ["Australia","New Zealand","Papua New Guinea","Fiji","Solomon Islands","Vanuatu","Samoa","Tonga","Kiribati","Micronesia","Palau","Marshall Islands","Nauru","Tuvalu","New Caledonia"]
+  americas: ["United States","Brazil","Mexico","Argentina","Colombia","Chile","Peru","Venezuela","Ecuador","Bolivia","Paraguay","Uruguay","Cuba","Haiti","Dominican Republic","Guatemala","Honduras","El Salvador","Nicaragua","Costa Rica","Panama","Jamaica","Trinidad and Tobago","Guyana","Suriname","Barbados","Bahamas","Saint Lucia","Grenada","Saint Vincent","Antigua and Barbuda","Saint Kitts and Nevis","Canada","Belize","French Guiana","Puerto Rico"],
+  africa: ["Nigeria","Ethiopia","Egypt","Tanzania","Kenya","South Africa","Uganda","Sudan","Algeria","Morocco","Ghana","Mozambique","Madagascar","Cameroon","Angola","Zimbabwe","Mali","Burkina Faso","Malawi","Zambia","Senegal","Somalia","Rwanda","Chad","Guinea","South Sudan","Benin","Tunisia","Libya","Sierra Leone","Togo","Eritrea","Central African Republic","Liberia","Republic of the Congo","Congo","Mauritania","Gabon","Namibia","Botswana","Lesotho","Gambia","Guinea-Bissau","Djibouti","Eswatini","Comoros","Cape Verde","Mauritius","Burundi","Niger"],
+  asia: ["China","India","Japan","South Korea","Indonesia","Pakistan","Bangladesh","Vietnam","Philippines","Thailand","Myanmar","Malaysia","North Korea","Sri Lanka","Kazakhstan","Uzbekistan","Afghanistan","Nepal","Tajikistan","Kyrgyzstan","Turkmenistan","Mongolia","Laos","Cambodia","Singapore","Brunei","Bhutan","Maldives","Timor-Leste","Taiwan"],
+  mena: ["Saudi Arabia","Iran","Turkey","Iraq","Syria","UAE","Israel","Jordan","Lebanon","Palestine","Yemen","Oman","Qatar","Kuwait","Bahrain","Tunisia","Algeria","Morocco","Libya"],
+  oceania: ["Australia","New Zealand","Papua New Guinea","Fiji","Solomon Islands","Vanuatu","Samoa","Tonga","Kiribati","Palau","Marshall Islands","Nauru","Tuvalu","New Caledonia"]
 };
 
-const PRIORITY_TABS = ['overview','history','politics','leaders','culture','wars','geopolitics'];
-const ALL_TABS = ['overview','antiquity','history','politics','leaders','culture','monuments','religion','celebrities','geopolitics','wars','crises','regions','books','resources'];
+const PRIORITY_TABS = ['overview','history','politics','leaders','culture'];
 
 module.exports = async function handler(req, res) {
-  const secret = req.query.secret || req.body?.secret;
-  if (secret !== process.env.PREGEN_SECRET && secret !== 'atlas2026') {
+  const secret = req.query.secret;
+  if (secret !== 'atlas2026' && secret !== process.env.PREGEN_SECRET) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  const { country, tab, batch, start = 0, lang = 'en', priority = 'true' } = req.query;
-  const tabs = priority === 'true' ? PRIORITY_TABS : ALL_TABS;
+  const { country, tab, batch, lang = 'en' } = req.query;
+  const start = parseInt(req.query.start || '0');
 
-  // Single country + tab
+  // Single page generation
   if (country && tab) {
-    const result = await generateAndStore(country, tab, lang);
+    const result = await generatePage(country, tab, lang);
     return res.status(200).json(result);
   }
 
-  // Single country all tabs
+  // Single country - all priority tabs
   if (country) {
     const results = [];
-    for (const t of tabs) {
-      const r = await generateAndStore(country, t, lang);
-      results.push({ tab: t, ...r });
-      await delay(2000);
+    for (const t of PRIORITY_TABS) {
+      const r = await generatePage(country, t, lang);
+      results.push(r);
+      await sleep(1500);
     }
-    return res.status(200).json({ country, results });
+    return res.status(200).json({ country, tabs_generated: results.length, results });
   }
 
   // Batch by region
   if (batch && COUNTRIES_BY_REGION[batch]) {
-    const countries = COUNTRIES_BY_REGION[batch].slice(Number(start), Number(start) + 3);
+    const list = COUNTRIES_BY_REGION[batch];
+    const chunk = list.slice(start, start + 2); // 2 countries at a time
     const results = [];
-    for (const c of countries) {
+
+    for (const c of chunk) {
       for (const t of ['overview', 'history']) {
-        const r = await generateAndStore(c, t, lang);
-        results.push({ country: c, tab: t, ...r });
-        await delay(3000);
+        const r = await generatePage(c, t, lang);
+        results.push(r);
+        await sleep(2000);
       }
     }
-    const nextStart = Number(start) + 3;
-    const hasMore = nextStart < COUNTRIES_BY_REGION[batch].length;
+
+    const nextStart = start + 2;
+    const hasMore = nextStart < list.length;
+
     return res.status(200).json({
-      processed: countries,
+      batch,
+      processed: chunk,
       results,
-      next: hasMore ? `/api/pregenerator?secret=${secret}&batch=${batch}&start=${nextStart}` : null,
-      remaining: hasMore ? COUNTRIES_BY_REGION[batch].length - nextStart : 0
+      progress: `${Math.min(nextStart, list.length)}/${list.length}`,
+      next: hasMore
+        ? `/api/pregenerator?secret=${secret}&batch=${batch}&start=${nextStart}&lang=${lang}`
+        : null,
+      remaining: hasMore ? list.length - nextStart : 0,
+      message: hasMore
+        ? `✅ Done ${chunk.join(', ')}. Copy the "next" URL to continue.`
+        : `✅ Batch "${batch}" COMPLETE! All ${list.length} countries processed.`
     });
   }
 
-  // Status
+  // Status check
   const SUPABASE_URL = process.env.SUPABASE_URL;
   const SUPABASE_KEY = process.env.SUPABASE_ANON_KEY;
+  let stored = 0;
   if (SUPABASE_URL && SUPABASE_KEY) {
     try {
-      const r = await fetch(`${SUPABASE_URL}/rest/v1/pages?select=cache_key&limit=1000`,
-        { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } });
-      const pages = await r.json();
-      return res.status(200).json({
-        stored_pages: pages.length,
-        total_possible: Object.values(COUNTRIES_BY_REGION).flat().length * ALL_TABS.length,
-        regions: Object.fromEntries(Object.entries(COUNTRIES_BY_REGION).map(([k,v])=>[k,v.length])),
-        instructions: {
-          single: '/api/pregenerator?secret=atlas2026&country=France&tab=overview',
-          batch_europe: '/api/pregenerator?secret=atlas2026&batch=europe&start=0',
-          batch_americas: '/api/pregenerator?secret=atlas2026&batch=americas&start=0',
-          batch_africa: '/api/pregenerator?secret=atlas2026&batch=africa&start=0',
-          batch_asia: '/api/pregenerator?secret=atlas2026&batch=asia&start=0',
-        }
-      });
+      const r = await fetch(
+        `${SUPABASE_URL}/rest/v1/pages?select=id`,
+        { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
+      );
+      const data = await r.json();
+      stored = Array.isArray(data) ? data.length : 0;
     } catch(e) {}
   }
-  return res.status(200).json({ message: 'Pre-generator ready', usage: '?secret=atlas2026&batch=europe' });
+
+  return res.status(200).json({
+    status: 'ready',
+    stored_pages: stored,
+    total_countries: Object.values(COUNTRIES_BY_REGION).flat().length,
+    instructions: {
+      europe: `/api/pregenerator?secret=atlas2026&batch=europe&start=0`,
+      americas: `/api/pregenerator?secret=atlas2026&batch=americas&start=0`,
+      africa: `/api/pregenerator?secret=atlas2026&batch=africa&start=0`,
+      asia: `/api/pregenerator?secret=atlas2026&batch=asia&start=0`,
+      mena: `/api/pregenerator?secret=atlas2026&batch=mena&start=0`,
+      oceania: `/api/pregenerator?secret=atlas2026&batch=oceania&start=0`,
+      single: `/api/pregenerator?secret=atlas2026&country=France&tab=overview`
+    }
+  });
 };
 
-async function generateAndStore(country, tab, lang) {
-  const SUPABASE_URL = process.env.SUPABASE_URL;
-  const SUPABASE_KEY = process.env.SUPABASE_ANON_KEY;
-  const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY;
+async function generatePage(country, tab, lang) {
+  // Create mock req/res to call generate directly
+  const mockReq = {
+    method: 'POST',
+    headers: { 'x-forwarded-for': 'pregenerator' },
+    body: { country, tab, lang },
+    socket: { remoteAddress: 'pregenerator' }
+  };
 
-  const cacheKey = `${country}::${tab}::${lang}::`;
-
-  // Check if already in Supabase
-  if (SUPABASE_URL && SUPABASE_KEY) {
+  return new Promise((resolve) => {
+    const mockRes = {
+      _status: 200,
+      _data: null,
+      setHeader() {},
+      status(code) { this._status = code; return this; },
+      json(data) {
+        this._data = data;
+        resolve({
+          country, tab,
+          status: this._status === 200 ? (data.cached ? 'already_cached' : 'generated') : 'error',
+          cached: data.cached || false,
+          error: data.error || null
+        });
+      },
+      end() { resolve({ country, tab, status: 'empty' }); }
+    };
     try {
-      const check = await fetch(`${SUPABASE_URL}/rest/v1/pages?cache_key=eq.${encodeURIComponent(cacheKey)}&select=id`,
-        { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } });
-      const existing = await check.json();
-      if (existing?.length > 0) return { status: 'already_cached', country, tab };
-    } catch(e) {}
-  }
-
-  // Generate
-  try {
-    const r = await fetch(`https://${process.env.VERCEL_URL||'atlas-mundi.vercel.app'}/api/generate`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ country, tab, lang })
-    });
-    const d = await r.json();
-    return { status: d.cached ? 'was_cached' : 'generated', country, tab, tokens: d.tokens };
-  } catch(e) {
-    return { status: 'error', error: e.message, country, tab };
-  }
+      generateHandler(mockReq, mockRes);
+    } catch(e) {
+      resolve({ country, tab, status: 'error', error: e.message });
+    }
+  });
 }
 
-function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
