@@ -1,0 +1,11 @@
+{
+  "name": "atlas-mundi",
+  "version": "5.0.0",
+  "description": "Atlas Mundi — The World's Most Complete Interactive Encyclopaedia",
+  "private": true,
+  "scripts": {
+    "pregenerate": "node scripts/pregenerate-all.js",
+    "pregenerate:fr": "node scripts/pregenerate-all.js --lang=fr",
+    "pregenerate:en": "node scripts/pregenerate-all.js --lang=en"
+  }
+}
